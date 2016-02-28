@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>{$page_title}</title>
+<meta name="keywords" content="{$page_title}" />
+<meta name="description" content="{$page_title}" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<link href="{$ectouch_themes}/css/promote.css" rel="stylesheet" type="text/css" />
+<link href="{$ectouch_themes}/css/foot.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="{$ectouch_themes}/js/jquery.min.js"></script>
+</head>
+<body>
+<div class="index">
+  <div class="header"><a href="{if $article.link neq ''}{$article.link}#{else}{/if}">{$article.content}</a></div>
+</div>
+{if $pid}
+<!-- #BeginLibraryItem "/library/page_gz.lbi" --><!-- #EndLibraryItem -->
+{else}
+<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
+{/if}
+<script src="{$ectouch_themes}/js/lazyload.js"></script>
+<script type="text/javascript">
+$(function(){
+//延迟加载图片
+	$("img").lazyload({	 
+       effect : "fadeIn" 
+    });	
+});	
+</script>
+</body>
+</html>

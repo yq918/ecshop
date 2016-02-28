@@ -1,0 +1,30 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" href="{$ectouch_themes}/css/foot.css">
+<div class="footer clearfix">
+	<p>公司名称：{$shop_address}</p>
+	<p>联系电话：{$service_phone}</p>
+	<p>Copyright {$copyright} All Rights Reserved</p>
+</div>
+<script src="{$ectouch_themes}/js/lazyload.js"></script>
+<script type="text/javascript">
+$(function(){
+//延迟加载图片
+	$("img").lazyload({	 
+       effect : "fadeIn" 
+    }); 
+});	
+function onBridgeReady(){
+   WeixinJSBridge.call('hideToolbar');
+}
+
+if (typeof WeixinJSBridge == "undefined"){
+    if( document.addEventListener ){
+        document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+    }else if (document.attachEvent){
+        document.attachEvent('WeixinJSBridgeReady', onBridgeReady); 
+        document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+    }
+}else{
+    onBridgeReady();
+}
+</script> 

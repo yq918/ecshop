@@ -1,0 +1,21 @@
+<!-- $Id: user_address_list.htm 14216 2008-03-10 02:27:21Z testyang $ -->
+{include file="pageheader.htm"}
+<div class="list-div">
+  <table width="100%" cellpadding="3" cellspacing="1">
+     <tr>
+      <th>编号</th>
+      <th>收藏的商品</th>
+      <th>收藏时间</th>
+    </tr>
+  {foreach from=$fav_list key=Key item=val}
+    <tr>
+      <td>{$val.rec_id}</td>
+      <td>【ID】{$val.goods_id}&nbsp; 【名称】{$val.goods_name}&nbsp;&nbsp;【价格】 {$val.shop_price}</td>      
+      <td>{$val.add_time}</td>
+    </tr>
+  {foreachelse}
+    <tr><td class="no-records" colspan="4">{$lang.no_records}</td></tr>
+  {/foreach}
+  </table>
+</div>
+{include file="pagefooter.htm"}

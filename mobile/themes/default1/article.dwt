@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>{$page_title} 触屏版</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<link href="{$ectouch_themes}/images/touch-icon.png" rel="apple-touch-icon-precomposed" />
+<link href="{$ectouch_themes}/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+<link href="{$ectouch_themes}/ectouch.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+<header id="header" >
+  <div class="header_l header_return"> <a class="ico_10"  href="javascript:history.back(-1)"> 返回 </a> </div>
+  <h1> 文章详情 </h1>
+  <div class="header_r"> <a class="ico_15" href="ectouch.php?act=share&content={$article.title}"> 分享 </a> </div>
+</header>
+<div class="blank3"></div>
+<section class="wrap">
+  <div class="art_content radius10">
+    <h2><span>{$article.title}</span> {$article.add_time}</h2>
+    <div>
+      <p> {$article.content} </p>
+    </div>
+<section class="mod-share share-1"><a onClick="goodsLove({$article.article_id},1)" class="share-btn"><span class="ico-share">发送给朋友</span></a><a onClick="goodsLove({$article.article_id},1)" class="share-btn"><span class="ico-pyq">分享到朋友圈</span></a></section>  
+  </div>
+</section>
+
+<!--<div class="bdsharebuttonbox share box1 radius10 padd1 clearfix" style="margin-top:10px;">
+  <h2 style="color:#F00; padding:10px 0px;"><span>登陆后分享送积分</span></h2>
+    <ul>
+      <li> <A class=bds_qzone title=分享到QQ空间 href="http://share.baidu.com/code#" data-cmd="qzone" id_value="{$article.article_id}" type="0" onClick="goodsLove({$article.article_id},1)"></A> <span>分享到QQ空间</span> </li>
+      <li> <A class=bds_tsina title=分享到新浪微博 href="http://share.baidu.com/code#" data-cmd="tsina"  id_value="{$article.article_id}" type="0" onClick="goodsLove({$article.article_id},1)"></A> <span>分享到新浪微博</span> </li>
+    </ul>
+    <ul>
+      <li> <A class=bds_tqq title=分享到腾讯微博 href="http://share.baidu.com/code#" data-cmd="tqq"  id_value="{$article.article_id}" type="0" onClick="goodsLove({$article.article_id},1)"></A> <span>分享到腾讯微博</span> </li>
+      <li> <A class=bds_renren title=分享到人人网 href="http://share.baidu.com/code#" data-cmd="renren"  id_value="{$article.article_id}" type="0" onClick="goodsLove({$article.article_id},1)"></A> <span>分享到人人网</span> </li>
+    </ul>
+    <ul>
+      <li> <A class=bds_weixin title=分享到微信 href="http://share.baidu.com/code#" data-cmd="weixin"  id_value="{$article.article_id}" type="0" onClick="goodsLove({$article.article_id},1)"></A> <span>分享到微信</span> </li>
+      <li> <A class=bds_douban title=分享到豆瓣网 href="http://share.baidu.com/code#" data-cmd="douban"  id_value="{$article.article_id}" type="0" onClick="goodsLove({$article.article_id},1)"></A> <span>分享到豆瓣网</span> </li>
+    </ul>
+    <ul>
+      <li> <A class=bds_kaixin001 title=分享到开心网 href="http://share.baidu.com/code#" data-cmd="kaixin001"  id_value="{$article.article_id}" type="0" onClick="goodsLove({$article.article_id},1)"></A> <span>分享到开心网</span> </li>
+      <li> <A class=bds_tieba title=分享到百度贴吧 href="http://share.baidu.com/code#" data-cmd="tieba"  id_value="{$article.article_id}" type="0" onClick="goodsLove({$article.article_id},1)"></A> <span>分享到百度贴吧</span> </li>
+    </ul>
+    <ul>
+      <li> <A class=bds_tsohu title=分享到搜狐微博 href="http://share.baidu.com/code#" data-cmd="tsohu"  id_value="{$article.article_id}" type="0" onClick="goodsLove({$article.article_id},1)"></A> <span>分享到搜狐微博</span> </li>
+      <li> <A class=bds_taobao title=分享到我的淘宝 href="http://share.baidu.com/code#" data-cmd="taobao"  id_value="{$article.article_id}" type="0" onClick="goodsLove({$article.article_id},1)"></A> <span>分享到我的淘宝</span> </li>
+    </ul>
+  </div>-->
+<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
+<script type="text/javascript" src="{$ectouch_themes}/js/comjs.js"></script>
+
+<div class="mod-pop" id="pop-share" onclick="hidePop('#pop-share')">
+<span class="text-share"></span></div>
+<script>function displayit(n){
+	for(i=0;i<4;i++){
+		if(i==n){
+			var id='menu_list'+n;
+			if(document.getElementById(id).style.display=='none'){
+				document.getElementById(id).style.display='';
+				document.getElementById("plug-wrap").style.display='';
+			}else{
+				document.getElementById(id).style.display='none';
+				document.getElementById("plug-wrap").style.display='none';
+			}
+		}else{
+			if($('#menu_list'+i)){
+				$('#menu_list'+i).css('display','none');
+			}
+		}
+	}
+}
+function closeall(){
+	var count = document.getElementById("top_menu").getElementsByTagName("ul").length;
+	for(i=0;i<count;i++){
+		document.getElementById("top_menu").getElementsByTagName("ul").item(i).style.display='none';
+	}
+	document.getElementById("plug-wrap").style.display='none';
+}
+
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+	WeixinJSBridge.call('hideToolbar');
+});
+</script>
+<!--<script type="text/javascript">			
+window.shareData = {  
+				"moduleName":"Index",
+				"moduleID": '{$article.article_id}',
+				"imgUrl": "", 
+				"timeLineLink": "{$article.url}",
+				"sendFriendLink": "{$article.url}",
+				"weiboLink": "{$article.url}",
+				"tTitle": "{$article.title}",
+				"tContent": ""
+			};
+		</script>
+		<script>
+		document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+        WeixinJSBridge.on('menu:share:appmessage', function (argv) {
+         shareHandle('friend');
+            WeixinJSBridge.invoke('sendAppMessage', { 
+                "img_url": window.shareData.imgUrl,
+                "img_width": "640",
+                "img_height": "640",
+                "link": window.shareData.sendFriendLink,
+                "desc": window.shareData.tContent,
+                "title": window.shareData.tTitle
+            }, function (res) {
+                _report('send_msg', res.err_msg);
+            })
+        });
+
+        WeixinJSBridge.on('menu:share:timeline', function (argv) {
+         shareHandle('frineds');
+            WeixinJSBridge.invoke('shareTimeline', {
+                "img_url": window.shareData.imgUrl,
+                "img_width": "640",
+                "img_height": "640",
+                "link": window.shareData.sendFriendLink,
+                "desc": window.shareData.tContent,
+                "title": window.shareData.tTitle
+            }, function (res) {
+                _report('timeline', res.err_msg);
+            });
+        });
+
+        WeixinJSBridge.on('menu:share:weibo', function (argv) {
+         shareHandle('weibo');
+            WeixinJSBridge.invoke('shareWeibo', {
+                "content": window.shareData.tContent,
+                "url": window.shareData.sendFriendLink,
+            }, function (res) {
+                _report('weibo', res.err_msg);
+            });
+        });
+        }, false)
+        
+   function shareHandle(to) {
+	    var submitData = {
+		module: window.shareData.moduleName,
+		moduleid: window.shareData.moduleID,
+		token:'akpxvz1392961211',
+		wecha_id:'',
+		url: window.shareData.sendFriendLink,
+		to:to
+	};
+	//$.post('/index.php?g=Wap&m=Index&a=record&token=akpxvz1392961211&wecha_id=&id=191&isscore=1',submitData,function (data) {},'json')
+}
+</script>-->
+<script type="text/javascript">
+function goodsLove(id_value,type)
+{
+	 $.ajax({
+	   type:"GET",
+	   url:'ajax.php?act=loveSupport',
+	   cache:false,
+	   dataType:'json',     //接受数据格式
+	   data:'id_value='+id_value+'&type='+type,
+	   success:goodsLoveResponse
+   });
+}
+function goodsLoveResponse(result)
+{
+	if(result.error==1)
+	{
+		window.location.href='user.php';
+		return;
+	}
+	/*if(result.err_msg)
+	{
+		alert(result.err_msg);
+	}*/
+	showPop('#pop-share')
+}
+</script>
+</body>
+</html>

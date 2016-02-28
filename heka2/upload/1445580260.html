@@ -1,0 +1,89 @@
+
+<html>
+<head>
+<meta http-equiv=Content-Type content=text/html; charset="utf-8">
+<title>【dfd】的名片</title>
+<meta name=description content="dfd的名片">
+<meta name= content="dfd\n手机：\ndfsf ">
+<style textstyle=text/css>
+.div {
+      border:1px solid #666666;
+      padding:5px;
+      margin:5px
+      }
+</style>
+<head>
+<body style=background-image:url("bg/0.jpg");>
+<div style="width:1063px; height:657px;background:url(1.gif) no-repeat;color:#1d64a5;font-size:40pt;font-weight:bold;font-family:黑体;">
+
+  <div style="width:399;height:48px; line-height:48px; margin-left:356px; float:left; display:inline; padding-top:401px;">dfsf</div>
+   <div style="width:284;height:48px; line-height:48px; float:left; display:inline; padding-top:401px;">dfd</div>
+</div>
+<hr>
+<div class="bshare-custom"><a title="分享到QQ空间" class="bshare-qzone"></a><a title="分享到新浪微博" class="bshare-sinaminiblog"></a><a title="分享到人人网" class="bshare-renren"></a><a title="分享到腾讯微博" class="bshare-qqmb"></a><a title="分享到网易微博" class="bshare-neteasemb"></a><a title="更多平台" class="bshare-more bshare-more-icon more-style-addthis"></a><span class="BSHARE_COUNT bshare-share-count">0</span></div><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=&amp;pophcol=3&amp;lang=zh"></script><script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+<hr>
+
+
+
+<script>
+var imgUrl = "http://fx5.bjkmyl.com/card/upload/photo/";
+var lineLink = "http://fx5.bjkmyl.com/card/upload/1445580260.html";
+var descContent = "dfd\n手机：\ndfsf ";
+var shareTitle = "【dfd】的名片";
+var appid = "";
+
+function shareFriend() {
+    WeixinJSBridge.invoke('sendAppMessage',{
+                            "appid": appid,
+                            "img_url": imgUrl,
+                            "img_width": "640",
+                            "img_height": "640",
+                            "link": lineLink,
+                            "desc": descContent,
+                            "title": shareTitle
+                            }, function(res) {
+                            _report('send_msg', res.err_msg);
+                            })
+}
+function shareTimeline() {
+    WeixinJSBridge.invoke('shareTimeline',{
+                            "img_url": imgUrl,
+                            "img_width": "640",
+                            "img_height": "640",
+                            "link": lineLink,
+                            "desc": descContent,
+                            "title": shareTitle
+                            }, function(res) {
+                            _report('timeline', res.err_msg);
+                            });
+}
+function shareWeibo() {
+    WeixinJSBridge.invoke('shareWeibo',{
+                            "content": descContent,
+                            "url": lineLink,
+                            }, function(res) {
+                            _report('weibo', res.err_msg);
+                            });
+}
+// 当微信内置浏览器完成内部初始化后会触发WeixinJSBridgeReady事件。
+document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+
+        // 发送给好友
+        WeixinJSBridge.on('menu:share:appmessage', function(argv){
+            shareFriend();
+            });
+
+        // 分享到朋友圈
+        WeixinJSBridge.on('menu:share:timeline', function(argv){
+            shareTimeline();
+            });
+
+        // 分享到微博
+        WeixinJSBridge.on('menu:share:weibo', function(argv){
+            shareWeibo();
+            });
+        }, false);
+</script>
+
+</body>
+</html>

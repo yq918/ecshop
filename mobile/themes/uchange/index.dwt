@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>{$page_title}</title>
+<meta name="keywords" content="分销员的店铺" />
+<meta name="description" content="分销员的店铺" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<link href="{$ectouch_themes}/images/touch-icon.png" rel="apple-touch-icon-precomposed" />
+<link href="{$ectouch_themes}/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+<link href="{$ectouch_themes}/ectouch.css?v=2014" rel="stylesheet" type="text/css" />
+<link href="{$ectouch_themes}/css/foot.css" rel="stylesheet" type="text/css" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<link href="{$ectouch_themes}/images/touch-icon.png" rel="apple-touch-icon-precomposed" />
+<link href="{$ectouch_themes}/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+<link href="{$ectouch_themes}/ectouch.css?v=2014" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="{$ectouch_themes}/js/TouchSlide.js"></script>
+
+{insert_scripts files='common.js'}
+<script type="text/javascript" src="{$ectouch_themes}/js/TouchSlide.js"></script>
+<script type="text/javascript" src="{$ectouch_themes}/js/jquery.min.js"></script>
+<script type="text/javascript" src="{$ectouch_themes}/js/ectouch.js"></script>
+<script type="text/javascript" src="{$ectouch_themes}/js/TouchSlide.js"></script>
+</head>
+<body>
+
+<!--播放器广告s-->
+<div id="focus" class="focus region">
+  <div class="hd">
+    <ul>
+    </ul>
+  </div>
+  <div class="bd">
+    <!-- TemplateBeginEditable name="touch首页广告区域" -->
+<!-- #BeginLibraryItem "/library/ad_position.lbi" -->
+<script src="{$ectouch_themes}/js/slides.min.jquery.js"></script>
+    <script language="javascript">
+    	$(function(){
+			$('.indexBanner .slides').slidesjs({width: 640,height: 312,start:1,navigation: true,play: {interval: 5000,auto: true}});
+		})
+    </script>
+
+<style>
+.indexBanner {position:relative;overflow:hidden; z-index:100; margin:0px 0px 0px 0px; padding:0px; border:0px solid #e7e7e7; box-shadow:0px 0px 3px #e7e7e7; border-radius:0px;border-bottom:1px solid #dadada;}
+.indexBanner .slides {position:relative;}
+.indexBanner .slides_container {overflow:hidden;}
+.indexBanner .slides_container{}
+.indexBanner img{ width:100%;}
+.indexBanner .slides_container .slide{ display:block; text-align:left;}
+.indexBanner .caption{ position:absolute; bottom:0px; height:42px; width:100%; left:0px; background:url(../images/opk_black.png) repeat-x 0px 0px; font-size:1em; text-align:center; color:#fff; line-height:42px;}
+.indexBanner .slidesjs-pagination {position:absolute; bottom:10px; left:44%; z-index:99;}
+.indexBanner .slidesjs-pagination li {float:left;margin:0 5px;list-style:none; }
+.indexBanner .slidesjs-pagination li a {display:block;width:8px;height:8px; line-height:16px;padding-top:0px;float:left; text-align:center;overflow:hidden; background:#fff; text-indent:-400px; border-radius:8px;}
+.indexBanner .slidesjs-pagination li a.active,.indexBanner .slidesjs-pagination li a:hover.active {background:#C33; }
+.indexBanner .slidesjs-pagination li a:hover { background: #C33;}
+</style>
+      {if $sliders}
+       <div class="indexBanner">    	
+            <div class="slides">     
+            {foreach from=$sliders item=slide}
+                <div class="slide">
+                    <a href="{if $slide.ad_link}{$slide.ad_link}{else}#{/if}"><img src="{$slide.img}" class="slideimg"/></a>
+                </div>             
+            {/foreach}
+             </div>
+        </div>
+       {/if}
+ <!-- #EndLibraryItem -->
+<!-- TemplateEndEditable -->
+  </div>
+</div>
+<script type="text/javascript">
+TouchSlide({ 
+	slideCell:"#focus",
+	titCell:".hd ul", //开启自动分页 autoPage:true ，此时设置 titCell 为导航元素包裹层
+	mainCell:".bd ul", 
+	effect:"leftLoop", 
+	autoPlay:true,//自动播放
+	autoPage:true //自动分页
+});
+</script>
+<!--播放器广告e-->
+<div class="blank2"> </div>
+  <!--快速连接s-->
+  <div class="region row row_category">
+    <ul class="flex flex-f-row">
+    
+	  <!-- {foreach name=nav_middle_list from=$navigator_list.middle item=nav} -->
+      <li class="flex_in"> <a href="{$nav.url}"{if $nav.opennew eq 1} target="_blank"{/if} title="{$nav.name}"> <img src="{$nav.pic}" /> </a>
+        <p> {$nav.name} </p>
+      </li>
+      <!-- {if $smarty.foreach.nav_middle_list.iteration % 4 eq 0 and $smarty.foreach.nav_middle_list.iteration neq $smarty.foreach.nav_middle_list.total} 菜单取模 -->
+      </ul><ul class="flex flex-f-row">
+      <!-- {/if} -->
+      <!-- {/foreach} -->
+    </ul>
+  </div>
+  <!--快速连接e-->
+<!--content s-->
+<!-- TemplateBeginEditable name="中部主区域" -->
+<!-- #BeginLibraryItem "/library/recommend_new.lbi" -->
+
+<!-- {if $new_goods} -->
+<style type="text/css">
+.picScroll{ margin:10px auto; text-align:center; height:auto; position:relative  }
+.picScroll .bd ul{ width:100%;  float:left; padding-top:10px;  }
+.picScroll .bd li{ width:33%; float:left; font-size:14px; text-align:center;  }
+.picScroll .bd li a{-webkit-tap-highlight-color:rgba(0, 0, 0, 0); /* 取消链接高亮 */ }
+.picScroll .bd li img{ width:100px; height:100px; }
+.picScroll .hd{display:None}
+.picScroll .bd1 ul{ width:100%;  float:left; padding-top:10px;  }
+.picScroll .bd1 li{ width:33%; float:left; font-size:14px; text-align:center;  }
+.picScroll .bd1 li a{-webkit-tap-highlight-color:rgba(0, 0, 0, 0); /* 取消链接高亮 */ }
+.picScroll .bd1 li img{ width:100px; height:100px; }
+</style>
+<div class="blank2"></div>
+<div class="item_show_box2 box1 region" style="overflow:hidden">
+
+    <div id="picScroll" class="picScroll">
+        <div class="hd">
+            <ul></ul>
+        </div>
+        <div class="bd1">
+            <ul>
+                <!--{foreach from=$new_goods item=goods name=new_goods}-->
+                <li><a href="{$goods.url}"><img src="{$site_url}{$goods.thumb}" /></a>
+                <br/>
+                <!-- {if $goods.promote_price neq ""} --> 
+				<font style="font-size:8px">市场价</font><del style="font-size: .675rem;">{$goods.market_price}</del>
+                <span class="price_s"> {$goods.promote_price} </span> 
+                <!-- {else}--> 
+				<font style="font-size:8px">市场价</font><del style="font-size: .675rem;">{$goods.market_price}</del>
+                <span class="price_s"> {$goods.shop_price} </span> 
+				
+                <!--{/if}-->
+                <br>{$goods.name|escape:html|truncate:12}
+                </li>
+                <!--{if $smarty.foreach.new_goods.iteration%3 eq 0 && $smarty.foreach.new_goods.iteration neq $smarty.foreach.new_goods.total}--></ul><ul><!--{/if}-->
+                <!--{/foreach}-->
+        </div>
+    </div>
+
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!-- {if $hot_goods}-->
+<style type="text/css">
+.picScroll3 {
+	margin:10px auto;
+	text-align:center;
+}
+.picScroll3 .bd ul {
+	width:100%;
+	float:left;
+	padding-top:10px;
+}
+.picScroll3 .bd li {
+	width:33%;
+	float:left;
+	font-size:14px;
+	text-align:center;
+}
+.picScroll3 .bd li a {
+	-webkit-tap-highlight-color:rgba(0, 0, 0, 0); /* 取消链接高亮 */
+}
+.picScroll3 .bd li img {
+	width:100px;
+	height:100px;
+}
+.picScroll3 .hd {
+	display:None
+}
+</style>
+<div class="item_show_box2 box1 region" style="overflow:hidden">
+<div id="picScroll3" class="picScroll3">
+<div class="hd">
+  <ul>
+  </ul>
+</div>
+<div class="bd">
+<ul>
+   <!--{foreach from=$hot_goods item=goods}-->
+  <li><a href="{$goods.url}"><img src="{$site_url}{$goods.thumb}" /></a> 
+    <span class="price_s"> <a href="{$goods.url}" title="{$goods.name|escape:html}">{$goods.short_style_name} </a></span> <br/>
+     {$lang.exchange_integral}<span class="price_s">{$goods.exchange_integral}</span> 
+  </li>
+  <!--{if $smarty.foreach.best_goods.iteration%3 eq 0}-->
+</ul>
+<ul>
+<!--{/if}--> 
+<!--{/foreach}-->
+</div>
+</div>
+<div class="position_a_lt">
+  <div> </div>
+  <a href="search.php?intro=best">
+  <p> 热卖 </p>
+  <p class="ico_04"> </p>
+  </a> </div>
+<div class="position_a_rb">
+  <div> </div>
+  <a href="search.php?intro=best">
+  <p class="ico_04_b"> </p>
+  <p>  </p>
+  </a> </div>
+</div>
+<div class="blank5"></div>
+<script type="text/javascript">
+TouchSlide({
+    slideCell:"#picScroll3",
+    titCell:".hd ul", //开启自动分页 autoPage:true ，此时设置 titCell 为导航元素包裹层
+    autoPage:true, //自动分页
+    pnLoop:"false", // 前后按钮不循环
+    //switchLoad:"_src" //切换加载，真实图片路径为"_src" 
+});
+</script> 
+<!-- {/if} -->
+
+
+    <div class="position_a_lt">
+      <div> </div>
+      <a href="search.php?intro=new">
+      <p> 新品 </p>
+      <p class="ico_04"> </p>
+      </a> </div>
+    <div class="position_a_rb">
+      <div> </div>
+      <a href="search.php?intro=new">
+      <p class="ico_04_b"> </p>
+      <p> 更多 </p>
+      </a> </div>
+  </div>
+
+<script type="text/javascript">
+TouchSlide({
+    slideCell:"#picScroll",
+    titCell:".hd ul", //开启自动分页 autoPage:true ，此时设置 titCell 为导航元素包裹层
+    autoPage:true, //自动分页
+    pnLoop:"false", // 前后按钮不循环
+    //switchLoad:"_src" //切换加载，真实图片路径为"_src" 
+});
+</script>
+<!-- {/if} -->
+ <!-- #EndLibraryItem -->
+<!-- #BeginLibraryItem "/library/brand_goods.lbi" -->
+
+<!--循环品牌下商品 begin-->
+<div class="blank2"></div>
+<section class="item_show_box1 box1 region">
+    <header>
+        <span>
+            {$goods_brand.name|escape:html}
+        </span>
+        <a href="{$goods_brand.url}" class="ico_04 more">
+        </a>
+    </header>
+    <div class="flex flex-f-row">
+         <!--{foreach from=$brand_goods item=goods name=brand_goods}-->
+          <div class="goodsItem flex_in">
+            <a href="{$goods.url}">
+                <img src="{$site_url}/mobile/{$goods.thumb}" alt="{$goods.name|escape:html}" />
+            </a>
+            <div style="text-align:center">
+            <!-- {if $goods.promote_price neq ""} --> 
+            <span class="price_s"> {$goods.promote_price} </span> 
+            <!-- {else}--> 
+            <span class="price_s"> {$goods.shop_price} </span> 
+            <!--{/if}-->
+            <br>{$goods.short_name|escape:html}
+            </div>
+        </div>
+        <!--{if $smarty.foreach.brand_goods.iteration%3 eq 0}--></div><div class="flex flex-f-row"><!--{/if}-->
+        <!--{/foreach}-->
+    </div>
+</section>
+<!--循环分类下商品end-->
+ <!-- #EndLibraryItem -->
+<!-- #BeginLibraryItem "/library/brand_goods.lbi" -->
+
+<!--循环品牌下商品 begin-->
+<div class="blank2"></div>
+<section class="item_show_box1 box1 region">
+    <header>
+        <span>
+            {$goods_brand.name|escape:html}
+        </span>
+        <a href="{$goods_brand.url}" class="ico_04 more">
+        </a>
+    </header>
+    <div class="flex flex-f-row">
+         <!--{foreach from=$brand_goods item=goods name=brand_goods}-->
+          <div class="goodsItem flex_in">
+            <a href="{$goods.url}">
+                <img src="{$site_url}/mobile/{$goods.thumb}" alt="{$goods.name|escape:html}" />
+            </a>
+            <div style="text-align:center">
+            <!-- {if $goods.promote_price neq ""} --> 
+            <span class="price_s"> {$goods.promote_price} </span> 
+            <!-- {else}--> 
+            <span class="price_s"> {$goods.shop_price} </span> 
+            <!--{/if}-->
+            <br>{$goods.short_name|escape:html}
+            </div>
+        </div>
+        <!--{if $smarty.foreach.brand_goods.iteration%3 eq 0}--></div><div class="flex flex-f-row"><!--{/if}-->
+        <!--{/foreach}-->
+    </div>
+</section>
+<!--循环分类下商品end-->
+ <!-- #EndLibraryItem -->
+<!-- #BeginLibraryItem "/library/cat_articles.lbi" -->
+
+<!--循环品牌下商品 begin-->
+<div class="blank2"></div>
+<section class="item_show_box1 box1 region">
+    <header>
+        <span>
+            新手上路
+        </span>
+    </header>
+ <div class="clearfix article-list" style="padding:0px 20px; padding-bottom:10px;">
+  <!--{foreach from=$articles item=goods name=brand_goods}--> 
+    <li><a href="{$goods.url}&catid={$goods.catid}" title="{$goods.title}">{$goods.title}</a></li>
+	 <!--{/foreach}-->   
+    </div>
+          
+      
+</section>
+<!--循环分类下商品end-->
+ <!-- #EndLibraryItem -->
+<!-- #BeginLibraryItem "/library/cat_goods.lbi" -->
+
+<!--循环分类下商品 begin-->
+<section class="item_show_box1 box1 region" style="clear:both">
+    <header>
+        <span>
+            {$goods_cat.name|escape:html}
+        </span>
+        <a href="{$goods_cat.url}" class="ico_04 more">
+        </a>
+    </header>
+    <div class="flex flex-f-row">
+        <!-- {foreach name=goods from=$cat_goods item=goods}-->
+        <div class="goodsItem flex_in">
+            <a href="{$goods.url}">
+                <img src="{$site_url}/mobile/{$goods.thumb}" alt="{$goods.name|escape:html}" />
+            </a>
+            <div style="text-align:center">
+            <!-- {if $goods.promote_price neq ""} --> 
+            <span class="price_s"> {$goods.promote_price} </span> 
+            <!-- {else}--> 
+            <span class="price_s"> {$goods.shop_price} </span> 
+            <!--{/if}-->
+            <br>{$goods.name|escape:html|truncate:12}
+            </div>
+        </div>
+         <!--{if $smarty.foreach.goods.iteration%3 eq 0}--></div><div class="flex flex-f-row"><!--{/if}-->
+        <!-- {/foreach} -->
+    </div>
+    <div class="item_tags clearfix">
+        <!-- {if $goods_cat.cat_id} -->
+        <!-- {foreach from=$goods_cat.cat_id item=rec_cat name=f} -->
+        <A href="category.php?id={$rec_cat.id}">
+            {$rec_cat.name|escape:html}
+        </A>
+        <!--{/foreach}-->
+        <!--{/if}-->
+    </div>
+</section>
+<!--循环分类下商品end-->
+ <!-- #EndLibraryItem -->
+<!-- #BeginLibraryItem "/library/recommend_hot.lbi" -->
+
+<!-- {if $hot_goods} -->
+<style type="text/css">
+.picScroll2{ margin:10px auto; text-align:center;  }
+.picScroll2 .bd ul{ width:100%;  float:left; padding-top:10px;  }
+.picScroll2 .bd li{ width:33%; float:left; font-size:14px; text-align:center;  }
+.picScroll2 .bd li a{-webkit-tap-highlight-color:rgba(0, 0, 0, 0); /* 取消链接高亮 */ }
+.picScroll2 .bd li img{ width:100px; height:100px; }
+.picScroll2 .hd{display:None}
+
+
+
+.picScroll2 .bd1 ul{ width:100%;  float:left; padding-top:10px;  }
+.picScroll2 .bd1 li{ width:33%; float:left; font-size:14px; text-align:center;  }
+.picScroll2 .bd1 li a{-webkit-tap-highlight-color:rgba(0, 0, 0, 0); /* 取消链接高亮 */ }
+.picScroll2 .bd1 li img{ width:100px; height:100px; }
+.picScroll2 .hd{display:None}
+</style>
+<div class="blank2"></div>
+<div class="item_show_box2 box1 region" style="overflow:hidden">
+
+    <div id="picScroll2" class="picScroll2">
+        <div class="hd">
+            <ul></ul>
+        </div>
+        <div class="bd1">
+            <ul>
+                <!--{foreach from=$hot_goods item=goods name=hot_goods}-->
+                <li><a href="{$goods.url}"><img src="{$site_url}{$goods.thumb}" /></a>
+                <br/>
+                <!-- {if $goods.promote_price neq ""} --> 
+                <span class="price_s"> {$goods.promote_price} </span> 
+                <!-- {else}--> 
+				<font style="font-size:8px">市场价</font><del style="font-size: .675rem;">{$goods.market_price}</del>
+                <span class="price_s"> {$goods.shop_price} </span> 
+			
+                <!--{/if}-->
+                <br>{$goods.name|escape:html|truncate:12}
+                </li>
+                <!--{if $smarty.foreach.hot_goods.iteration%3 eq 0 && $smarty.foreach.hot_goods.iteration neq $smarty.foreach.hot_goods.total}--></ul><ul><!--{/if}-->
+                <!--{/foreach}-->
+        </div>
+    </div>
+
+    <div class="position_a_lt">
+      <div> </div>
+      <a href="search.php?intro=hot">
+      <p> 热卖 </p>
+      <p class="ico_04"> </p>
+      </a> </div>
+    <div class="position_a_rb">
+      <div> </div>
+      <a href="search.php?intro=hot">
+      <p class="ico_04_b"> </p>
+      <p> 更多 </p>
+      </a> </div>
+  </div>
+
+<script type="text/javascript">
+TouchSlide({
+    slideCell:"#picScroll2",
+    titCell:".hd ul", //开启自动分页 autoPage:true ，此时设置 titCell 为导航元素包裹层
+    autoPage:true, //自动分页
+    pnLoop:"false", // 前后按钮不循环
+    //switchLoad:"_src" //切换加载，真实图片路径为"_src" 
+});
+</script>
+<!-- {/if} -->
+ <!-- #EndLibraryItem -->
+<!-- TemplateEndEditable -->
+<div id=content class="wrap" style="margin:0; padding:0">
+
+
+
+<!--content e--> 
+
+<!--搜索弹出框-->
+<div id="main-search" class="main-search">
+<div class="hd"> <span class="ico_08 close"> 关闭 </span> </div>
+<div class="bd">
+  <div class="search_box">
+    <form action="search.php?" method="post" id="searchForm" name="searchForm">
+      <div class="content">
+        <input class="text" type="search" name="keywords" id="keywordBox" autofocus />
+        <button class="ico_07" type="submit" value="搜 索" onclick="return check('keywordBox')"></button>
+      </div>
+    </form>
+  </div>
+</div>
+</div>
+<script type="text/javascript">
+window.onload = function(){
+  $('#menu').css('display','');
+}
+$(function() {
+	$('nav#menu').mmenu();
+	$('#get_search_box').click(function(){
+		$(".mm-page").children('div').hide();
+		$("#main-search").css('position','fixed').css('top','0px').css('width','100%').css('z-index','999').show();
+		//$('#keywordBox').focus();
+	})
+	$("#main-search .close").click(function(){
+		$(".mm-page").children('div').show();
+		$("#main-search").hide();
+	})
+});
+</script>
+{if $pid}
+<!-- #BeginLibraryItem "/library/page_gz.lbi" --><!-- #EndLibraryItem -->
+{else}
+<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
+{/if}
+<!-- #BeginLibraryItem "/library/link_to.lbi" --><!-- #EndLibraryItem -->
+</body>
+</html>

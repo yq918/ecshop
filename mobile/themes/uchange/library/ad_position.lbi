@@ -1,0 +1,32 @@
+<script src="{$ectouch_themes}/js/slides.min.jquery.js"></script>
+    <script language="javascript">
+    	$(function(){
+			$('.indexBanner .slides').slidesjs({width: 640,height: 312,start:1,navigation: true,play: {interval: 5000,auto: true}});
+		})
+    </script>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style>
+.indexBanner {position:relative;overflow:hidden; z-index:100; margin:0px 0px 0px 0px; padding:0px; border:0px solid #e7e7e7; box-shadow:0px 0px 3px #e7e7e7; border-radius:0px;border-bottom:1px solid #dadada;}
+.indexBanner .slides {position:relative;}
+.indexBanner .slides_container {overflow:hidden;}
+.indexBanner .slides_container{}
+.indexBanner img{ width:100%;}
+.indexBanner .slides_container .slide{ display:block; text-align:left;}
+.indexBanner .caption{ position:absolute; bottom:0px; height:42px; width:100%; left:0px; background:url(../images/opk_black.png) repeat-x 0px 0px; font-size:1em; text-align:center; color:#fff; line-height:42px;}
+.indexBanner .slidesjs-pagination {position:absolute; bottom:10px; left:44%; z-index:99;}
+.indexBanner .slidesjs-pagination li {float:left;margin:0 5px;list-style:none; }
+.indexBanner .slidesjs-pagination li a {display:block;width:8px;height:8px; line-height:16px;padding-top:0px;float:left; text-align:center;overflow:hidden; background:#fff; text-indent:-400px; border-radius:8px;}
+.indexBanner .slidesjs-pagination li a.active,.indexBanner .slidesjs-pagination li a:hover.active {background:#C33; }
+.indexBanner .slidesjs-pagination li a:hover { background: #C33;}
+</style>
+      {if $sliders}
+       <div class="indexBanner">    	
+            <div class="slides">     
+            {foreach from=$sliders item=slide}
+                <div class="slide">
+                    <a href="{if $slide.ad_link}{$slide.ad_link}{else}#{/if}"><img src="{$slide.img}" class="slideimg"/></a>
+                </div>             
+            {/foreach}
+             </div>
+        </div>
+       {/if}

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>服务中心</title>
+<!-- #BeginLibraryItem "/library/page_common.lbi" --><!-- #EndLibraryItem --> 
+<link rel="stylesheet" type="text/css" href="http://developer.amap.com/Public/css/demo.Default.css" />
+<script src='http://webapi.amap.com/maps?v=1.3&key=746c9760d1b93153baa60fac1d6aab6e'></script>
+</head>
+<body>
+<header id="header" >
+  <div class="header_l"> <a class="ico_10" href="javascript:history.go(-1)"> 返回 </a> </div>
+  <h1> {$svcenter.sv_name} </h1>
+  </div>
+</header>
+<div class="blank3"></div>
+<section class="wrap">
+  <div class="art_content radius10" >
+    <div class="sv_item">
+      <ul>
+         <li>联系人： {$svcenter.linkman}</li>
+         <li>电 &nbsp; 话： {$svcenter.tel}</li>
+         <li>微 &nbsp; 信： {$svcenter.wechat}</li>
+         <li>Q &nbsp; Q： {$svcenter.qq}</li>
+         <li>地 &nbsp; 区： {$svcenter.area}</li>
+         <li>地 &nbsp; 址： {$svcenter.address}</li>
+         <li>线 &nbsp; 路： {$svcenter.sv_line}</li>
+         <li style="text-align:center"><input type="button" id="map_positon" value="地 图 所 在 位 置" class="orange_btn" style="color:#fff"></li>
+         {if $svcenter.wurl neq ''}
+         <li style="text-align:center"><input type="button" id="subscribe" value="关 注 公 众 号" class="green_btn" style="color:#fff" onClick="javascript:location.href='{$svcenter.wurl}'"></li>
+         {/if}
+      </ul>
+    </div>
+    <div class="art_content_show">
+      <h2>详情介绍</h2>
+      <p> {$svcenter.info} </p>
+    </div>
+    <div style="border-bottom:3px #ccc dashed; margin-bottom:10px; margin-top:10px"></div>
+    <div class="art_content_show">
+      <h2>优惠信息</h2>
+      <p> {$svcenter.sales} </p>
+    </div>
+    </div>  
+    <input type="hidden" name="xpoint" id="xpoint" value="{$svcenter.xpoint}"><input type="hidden" name="ypoint" id="ypoint" value="{$svcenter.ypoint}">
+    <div class="sv_map" >
+      <div style="text-align:center"><input type="button" id="return_detail" value="返 回 详 情" class="orange_btn" style="color:#fff"></div>
+      <div id="rst_map" style="width:100%; height:500px;"></div>
+    </div>
+
+<script>
+var mapObj;
+$(function(){
+	$('.sv_map').hide();
+	//初始化地图
+	if($('#ypoint').val()!='' && $('#xpoint').val()!=''){
+		var LngLatX = $('#xpoint').val();
+		var LngLatY = $('#ypoint').val();
+		var mapObj = new AMap.Map('rst_map', {
+		        resizeEnable: true,
+				rotateEnable: true,
+				dragEnable: true,
+				zoomEnable: true,
+				//设置可缩放的级别
+				zooms: [3,18],
+				//传入2D视图，设置中心点和缩放级别
+				view: new AMap.View2D({
+					center: new AMap.LngLat({$svcenter.ypoint},{$svcenter.xpoint} ),
+					zoom: 12
+		 })
+		});
+	    var marker = new AMap.Marker({				  
+		  icon:"http://www.lixinta.com/images/biaozhu.png",
+		  position:new AMap.LngLat({$svcenter.ypoint},{$svcenter.xpoint})
+	    });
+	    marker.setMap(mapObj);  //在地图上添加点
+    }else{
+	    $('.sv_map').html('该服务中心尚未设置坐标');	
+	}
+	//返回详情
+	$('#return_detail').click(function(){
+		$('.sv_map').hide();
+		$('.art_content').show();
+	});
+	//显示地图
+	$('#map_positon').click(function(){
+		$('.art_content').hide();
+		$('.sv_map').show();
+	});
+});
+
+function addMarker(){
+	   var marker = new AMap.Marker({				  
+		  icon:"http://webapi.amap.com/images/marker_sprite.png",
+		  position:new AMap.LngLat({$svcenter.ypoint},{$svcenter.xpoint})
+	    });
+	    marker.setMap(mapObj);  //在地图上添加点	
+}
+</script>  
+</section>
+<!-- #BeginLibraryItem "/library/page_footer_art.lbi" --><!-- #EndLibraryItem -->
+</body>
+</html>

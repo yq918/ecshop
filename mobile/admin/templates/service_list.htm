@@ -1,0 +1,60 @@
+{if $full_page}
+{include file="pageheader.htm"}
+{insert_scripts files="../data/static/js/utils.js,./js/listtable.js"}
+
+
+<!-- 订单列表 -->
+<form method="post" action="order.php?act=operate" name="listForm" onsubmit="return check()">
+  <div class="list-div" id="listDiv">
+{/if}
+
+<table cellpadding="3" cellspacing="1">
+  <tr>
+   <th>
+      <input onclick='listTable.selectAll(this, "service_id")' type="checkbox"/>售后单号</th>
+    <th>所属订单</th>
+    <th>售后类型</th>
+    <th>联系人</th>
+    <th>电话</th>
+    <th>发布时间</th>
+    <th>售后状态</th>
+    <th>操作</th>
+  </tr>
+  <tr>
+  {foreach from=$service_list item=service key=dkey}
+  <tr>
+    <td valign="top" nowrap="nowrap"><input type="checkbox" name="service_id[]" value="{$service.service_id}" />{$service.service_sn}</td>
+    <td>{$service.order_sn}<br /></td>
+    <td align="center" valign="top" nowrap="nowrap">{$service.type}</td>
+    <td align="center" valign="top"> {$service.consignee|escape}</td>
+    <td align="center" valign="top" nowrap="nowrap">{$service.tel}</td>
+    <td align="center" valign="top" nowrap="nowrap">{$service.add_time}</td>
+    <td align="center" valign="top" nowrap="nowrap">{$service.status}</td>
+    <td align="center" valign="top"  nowrap="nowrap">
+     {if $service.service_status eq 0}<a href="javascript:confirm_redirect('单击后售后单即将生效，您确定要操作吗？', 'service.php?act=change&status=1&service_id={$service.service_id}')">确认</a>&nbsp; <a href="javascript:confirm_redirect('单击后售后单即将无效，您确定要操作吗？', 'service.php?act=change&status=3&service_id={$service.service_id}')">无效</a>{/if} 
+     {if $service.service_status eq 1}<a href="javascript:confirm_redirect('单击后售后单即将无效，您确定要操作吗？', 'service.php?act=change&status=4&service_id={$service.service_id}')">完成</a>{/if}
+     &nbsp; <a href="service.php?act=info&service_id={$service.service_id}">查看</a>
+     <!--<a onclick="{if(confirm('{$lang.confirm_delete}')){return true;}return false;}" href="order.php?act=operate&remove_service=1&service_id={$service.service_id}">{$lang.remove}</a>-->
+    </td>
+  </tr>
+  {/foreach}
+</table>
+
+<!-- 分页 -->
+<table id="page-table" cellspacing="0">
+  <tr>
+    <td align="right" nowrap="true">
+    {include file="page.htm"}
+    </td>
+  </tr>
+</table>
+
+{if $full_page}
+  </div>
+  <div>
+    <input name="remove_service" type="submit" id="btnSubmit3" value="{$lang.remove}" class="button" disabled="true" onclick="{if(confirm('{$lang.confirm_delete}')){return true;}return false;}" />
+  </div>
+</form>
+
+{include file="pagefooter.htm"}
+{/if}

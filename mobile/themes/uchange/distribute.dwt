@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta content="width=device-width; initial-scale=1.0; minimum-scale=1.0; maximum-scale=1.0" name="viewport" /> 
+<head>
+<title>{$wxconf.distribute_keywords}</title>
+<meta name="format-detection" content="telephone=no" />
+<link href="{$ectouch_themes}/css/feather.css" rel="stylesheet" type="text/css" />
+{insert_scripts files='common.js'}
+<script type="text/javascript" src="{$ectouch_themes}/js/j171.js"></script>
+<script type="text/javascript" src="{$ectouch_themes}/js/qo.js"></script>
+<script type="text/javascript" src="{$ectouch_themes}/js/js.js"></script>
+
+<script type="text/javascript">
+	$(function() {
+		$('.distribution').find('.item h3').click(function(){
+			if($(this).hasClass('show')){
+				$(this).removeClass('show');
+  				$(this).next().animate({'height':'0px'}, 'fast');
+			} else {
+				$(this).addClass('show');
+				$(this).next().animate({'height':$(this).next().find('li').size()*41+'px'}, 'fast');
+			}
+		});
+	});
+</script>
+
+</head>
+<body> 
+<!-- {if $action eq 'default'} -->
+<div class="distribution">
+	<div class="item uinfo" {if $info.is_distributor eq 0}style="height:120px;"{/if}>
+		 {if $info.head_url neq ''}<img src="{$info.head_url}">{else}<img src="{$ectouch_themes}/images/get_avatar.png" style="border-radius:40px">{/if} 
+		<div class="info">
+			<h5>{if $info.nick_name}{$info.nick_name}{else}{$info.user_name}{/if}[{if $distri.all_affiliate_persons>=$plus_supper_price_num}高级会员{elseif $distri.all_affiliate_persons>=$plus_middle_price_num} 中级会员{else} 普通会员{/if}]</h5>
+			<p>关注时间：{if $info.is_subscribe}{$info.subscribe_time}{else}未关注{/if}</p>
+			<p>推荐人：{$info.parent_user}</p>
+            {if $info.is_distributor eq 0}
+            <p style='color:red'>{$wxconf.distributor_name} ( 否 ) <a href="javascript:link_to('index.php')" style="color:blue">立即购买成为{$wxconf.distributor_name}</a></p>
+            {else}
+            <p style='color:red'>恭喜您，您已经成为分销商！</p>
+            {/if}
+		</div>
+	</div>
+	<div class="item total">
+		<table>
+			<tbody>
+				<tr>
+					<th>累计销售：</th>
+					<td>￥{$info.sales_all}</td>
+					<th>累计收入：</th>
+					<td>￥{$info.brokerage_all}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="item">
+		<h3>我的会员<em>{$distri.all_affiliate_persons}人</em></h3>
+		<ul>
+			<li><a href="javascript:link_to('distribute.php?act=member&level=1')"><p>{$wxconf.one_level_member_name}</p><em>{$distri.first_affiliate_persons}人</em><span></span></a></li>
+			<li><a href="javascript:link_to('distribute.php?act=member&level=2')"><p>{$wxconf.two_level_member_name}</p><em>{$distri.second_affiliate_persons}人</em><span></span></a></li>
+			<li class="last"><a href="javascript:link_to('distribute.php?act=member&level=3')"><p>{$wxconf.three_level_member_name}</p><em>{$distri.third_affiliate_persons}人</em><span></span></a></li>
+		</ul>
+	</div>
+	<div class="item count">
+		<h3>我的推广<em>{$distri.promote_clicks}人</em></h3>
+		<ul>
+			<li><a href="#here"><p>点击量</p><em>{$distri.promote_clicks}人</em><span></span></a></li>
+			<li><a href="#here"><p>关注量</p><em>{$distri.promote_subscribe}人</em><span></span></a></li>
+			<li class="last"><a href="#here"><p>成为{$wxconf.distributor_name}</p><em>{$distri.promote_distributor}人</em><span></span></a></li>
+		</ul>
+	</div>
+	<div class="item order">
+		<h3>我的收入<em>￥{$distri.real_brokerage}</em></h3>
+		<ul>
+			<li><a href="#here"><p>未生效({$wxconf.distribute_keywords})收入</p><em>￥{$distri.undistri_brokerage_all}</em></a></li>
+			<li><a href="#here"><p>已生效({$wxconf.distribute_keywords})收入</p><em>￥{$distri.real_brokerage}</em></a></li>
+		</ul>
+	</div>
+	<div class="item apply">
+		<h3><a href="#here" onClick="javascript:link_to('user.php?act=account_raply');">申请提现<span></span></a></h3>
+	</div>
+	<div class="item sqcode" onClick="link_to('distribute.php?act=qr_show')">
+		<h3><a href="javascript:link_to('distribute.php?act=qr_show')">推广二维码<span></span></a></h3>
+	</div>
+</div>
+<!--{/if}-->
+<!--{if $action eq 'member'}-->
+<header id="header">
+  <div class="header_l header_return"> <a class="ico" href="distribute.php"> 返回 </a> </div>
+  <h1> {$wxconf.distributor_name} {if $level eq 1}{$wxconf.one_level_member_name}{elseif $level eq 2}{$wxconf.two_level_member_name}{else}{$wxconf.three_level_member_name}{/if}{$count}人 </h1>
+</header>
+<div class="blank3"></div>
+<section class="wrap">
+   <div class="content">
+    {if $mem_list}
+    {foreach from="$mem_list" item="m"} 
+    	<a href="{$m.url}">
+        	<dl>
+            	<dt>{if $m.head_url neq ''}<img src="{$m.head_url}" border=0>{else}<img src="{$ectouch_themes}/images/get_avatar.png"  border=0>{/if} </dt>
+                <div>
+                  <h3>会员ID：{$m.user_name}</h3>
+                  <h3>昵&nbsp; 称：{if $m.nick_name}{$m.nick_name}{else}暂无{/if}</h3>
+                  <h3>关&nbsp; 注：{if $m.is_subscribe}{$m.sub_time}{else}未关注{/if}</h3>
+                <p>
+    </p></div>
+            </dl>
+        </a>
+    {/foreach}   
+    {else}
+      <div class="no_data">暂无相关数据</div>
+    {/if} 
+  </div>  
+  <!-- #BeginLibraryItem "/library/pager.lbi" --><!-- #EndLibraryItem -->
+  <!-- #BeginLibraryItem "/library/pages.lbi" --><!-- #EndLibraryItem -->
+</section>
+<!-- {/if} --> 
+
+<!--{if $action eq 'detail'}-->
+<header id="header">
+  <div class="header_l header_return"> <a class="ico" href="distribute.php?act=member&level={$level}"> 返回 </a> </div>
+  <h1> 会员详情 </h1>
+</header>
+<div class="distribution">
+	<div class="item uinfo">
+		 {if $info.head_url neq ''}<img src="{$info.head_url}">{else}<img src="{$ectouch_themes}/images/get_avatar.png" style="border-radius:40px">{/if} 
+		<div class="info">
+			<h5>{if $info.nick_name}{$info.nick_name}{else}{$info.user_name}{/if}</h5>
+			<p>关注时间：{if $info.is_subscribe}{$info.subscribe_time}{else}未关注{/if}</p>
+			<p>推荐人：{$info.parent_user}</p>
+		</div>
+	</div>
+	<div class="item total">
+		<table>
+			<tbody>
+				<tr>
+					<th>累计销售：</th>
+					<td>￥{$info.sales_all}</td>
+					<th>累计收入：</th>
+					<td>￥{$info.brokerage_all}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+    {foreach from="$levels" item="level"}
+	<div class="item">
+		<h3>{$info.sex}{$level.name}<em>{$level.persons}人</em></h3>
+		<ul>
+			<li><p>人数</p><em>{$level.persons}人</em><span></span></li>
+			<li class="money"><p>消费金额</p><em>￥{$level.sales}</em><span></span></li>
+            <li class="money"><p>贡献收入</p><em>￥{$level.brokerage}</em><span></span></li>
+		</ul>
+	</div>
+    {/foreach}
+</div>
+<!--{/if}-->
+<!--{if $action eq 'qr_show'}-->
+<header id="header">
+  <div class="header_l header_return"> <a class="ico" href="distribute.php"> 返回 </a> </div>
+   <h1> 推广方式：长按图片发送或者保存~ </h1>
+</header>
+<div class="blank3"></div>
+<section class="wrap">
+   <div class="content">
+    {if $is_qr}
+    	<img src="{$qr.qr_url}" width="100%" height="auto">  
+    {else}
+      <div class="no_data">暂无推广的二维码</div>
+    {/if} 
+  </div>  
+</section>
+<!-- {/if} --> 
+<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
+<!-- #BeginLibraryItem "/library/link_to.lbi" --><!-- #EndLibraryItem -->
+</body>
+</html>

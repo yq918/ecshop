@@ -1,0 +1,63 @@
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<div id="content" class="footer mr-t20">
+  <div style="height:46px;">&nbsp;</div>
+</div>
+
+<link href="{$ectouch_themes}/css/foot.css" type="text/css" rel="stylesheet"/>
+<!--全局导航-Start-->
+<div class="footbar clearfix">
+	<ul>
+		<li {if $request_page eq 'index.php'}class="active"{/if}><a href="index.php"><em class="bar1"></em><p>首页</p></a></li>
+		<li {if $request_page eq 'cart.php'}class="active"{/if}><a href="flow.php?step=cart"><em class="bar3"></em><p>购物车 <div id="carId" style="display:none"></div><div id="globalId" style="display:none"></div></p></a></li>
+		<li {if $request_page eq 'user.php'}class="active"{/if}><a href="user.php"><em class="bar4"></em><p>会员中心</p></a></li>
+        <li {if $request_page eq 'distribute.php'}class="active"{/if}><a href="distribute.php"><em class="bar2"></em><p>{$wxconf.distribute_keywords}</p></a></li>
+	</ul>
+</div>
+<!--全局导航-End-->
+<script type="text/javascript" src="{$ectouch_themes}/js/zepto.min.js?v=20140408"></script>
+<script src="{$ectouch_themes}/js/lazyload.js"></script>
+{if $php_self eq 'goods.php'}
+<script type="text/javascript">
+$(function(){
+//延迟加载图片
+	$("img:not(.goods_slde)").lazyload({	 
+       effect : "fadeIn" 
+    });	
+});	
+</script>
+{elseif $php_self eq 'index.php'}
+<script type="text/javascript">
+$(function(){
+//延迟加载图片
+	$("img:not(.slideimg)").lazyload({	 
+       effect : "fadeIn" 
+    });	
+});	
+</script>
+{else}
+<script type="text/javascript">
+$(function(){
+//延迟加载图片
+	$("img").lazyload({	 
+       effect : "fadeIn" 
+    });	
+});	
+</script>
+{/if}
+<script type="text/javascript">
+function onBridgeReady(){
+   WeixinJSBridge.call('hideToolbar');
+}
+
+if (typeof WeixinJSBridge == "undefined"){
+    if( document.addEventListener ){
+        document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+    }else if (document.attachEvent){
+        document.attachEvent('WeixinJSBridgeReady', onBridgeReady); 
+        document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+    }
+}else{
+    onBridgeReady();
+}
+</script>

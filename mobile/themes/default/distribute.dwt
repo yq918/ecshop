@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>我的店铺</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<link href="{$ectouch_themes}/images/touch-icon.png" rel="apple-touch-icon-precomposed" />
+<link href="{$ectouch_themes}/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+<link href="{$ectouch_themes}/ectouch.css" rel="stylesheet" type="text/css" />
+
+{* 包含脚本文件 *}
+{insert_scripts files='transport.js,common.js,user.js'}
+<script type="text/javascript" src="{$ectouch_themes}/js/jquery-1.4.4.min.js"></script>
+</head>
+<body>
+<!-- {if $action eq 'default'} -->
+{if $is_admin eq 1}
+<header id="header">
+  <h1> 查看分销 </h1>
+</header>
+{else}
+<header id="header">
+  <div class="header_l header_return"> <a class="ico_10" href="user.php"> 返回 </a> </div>
+  <h1> 我的店铺</h1>
+</header>
+{/if}
+<dl class="user_top">
+  <dt> {if $info.head_url neq ''}<img src="{$info.head_url}">{else}<img src="{$ectouch_themes}/images/get_avatar.png">{/if} </dt>
+  <dd>
+    <p>{if $info.nick_name}{$info.nick_name}{else}{$info.user_name}{/if}</p>
+    <p><span style="font-weight:bold">关注时间：{if $info.is_subscribe}{$info.subscribe_time}{else}未关注{/if}</span></p>
+  </dd>
+  <div class="user_distri_list">
+    <ul>
+      <li> 累计销售：￥{$info.sales_all}</li>
+      <li> 累计收入：￥{$info.brokerage_all}</li>
+    </ul>
+  </div>
+  <div class="quan1"></div>
+  <div class="quan2"></div>
+  <div class="quan3"></div>
+</dl>
+<div class="blank3"></div>
+<section class="wrap">
+  <div class="list_box padd1 radius10" style="padding-top:0;padding-bottom:0;"> 
+    <ul>
+      <li><span class="uninclude">&nbsp; &nbsp; </span><span>我的会员</span> <span class="person">{$distri.all_affiliate_persons}人</span>
+        <div class="son_list">
+          <ul>
+            <li onClick="location.href='distribute.php?act=member&level=1'"><span class="icon">&nbsp; &nbsp; </span><span>{$wxconf.one_level_member_name}</span> <i></i><span class="sp">{$distri.first_affiliate_persons}人</span></li>
+            <li onClick="location.href='distribute.php?act=member&level=2'"><span class="icon">&nbsp; &nbsp; </span><span>{$wxconf.two_level_member_name}</span> <i></i><span class="sp">{$distri.second_affiliate_persons}人</span></li>
+            <li onClick="location.href='distribute.php?act=member&level=3'"><span class="icon">&nbsp; &nbsp; </span><span>{$wxconf.three_level_member_name}</span> <i></i><span class="sp">{$distri.third_affiliate_persons}人</span></li>
+          </ul>
+        </div>
+      </li>
+      <li><span class="uninclude">&nbsp; &nbsp; </span><span>我的推广</span></li>
+        <div class="son_list">
+          <ul>
+            <li><span class="icon1">&nbsp; &nbsp; </span><span>点击量</span> <span class="sp">{$distri.promote_clicks}人</span></li>
+            <li><span class="icon1">&nbsp; &nbsp; </span><span>关注量</span> </i><span class="sp">{$distri.promote_subscribe}人</span></li>
+            <li><span class="icon1">&nbsp; &nbsp; </span><span>成为分销会员</span> <span class="sp">{$distri.promote_distributor}人</span></li>
+          </ul>
+        </div>
+      </li>  
+      <li><span class="uninclude">&nbsp; &nbsp; </span><span>我的收入</span> <span class="person">￥{$distri.real_brokerage}</span></li>
+        <div class="son_list">
+          <ul>
+            <li><span class="icon2">&nbsp; &nbsp; </span><span>未生效(分销)收入</span> <span class="sp">￥{$distri.undistri_brokerage_all}</span></li>
+            <li><span class="icon2">&nbsp; &nbsp; </span><span>已生效(分销)收入</span> </i><span class="sp">￥{$distri.real_brokerage}</span></li>
+            <!--<li><span class="icon2">&nbsp; &nbsp; </span><span>已收货订单收入</span> <span class="sp">￥{$distri.shipping_brokerage}</span></li>
+            <li><span class="icon2">&nbsp; &nbsp; </span><span>已审核订单收入</span> <span class="sp">￥{$distri.real_brokerage}</span></li-->
+          </ul>
+        </div>
+      </li>  
+      <li onClick="location.href='user.php?act=account_raply';"><span class="include">&nbsp; &nbsp; </span><span>申请提现</span></li>
+      <li onClick="location.href='distribute.php?act=qr_show';"><span class="erweima">&nbsp; &nbsp; </span><span>推广二维码</span></li>
+    </ul>
+  </div>
+  <div class="blank3"></div>
+  <div class="blank3"></div>
+  <div class="list_box padd1 radius10" style="padding-top:0;padding-bottom:0;"> 
+    <!-- <a href="user.php?act=track_packages" class="clearfix">
+				<span>{$lang.label_track_packages}</span><i></i>
+			</a>  --> 
+ </div>
+</section>
+<!--{/if}-->
+<!--{if $action eq 'member'}-->
+<header id="header">
+  <div class="header_l header_return"> <a class="ico_10" href="distribute.php"> 返回 </a> </div>
+  <h1> {$wxconf.distributor_name} {if $level eq 1}{$wxconf.one_level_member_name}{elseif $level eq 2}{$wxconf.two_level_member_name}{else}{$wxconf.three_level_member_name}{/if}{$count}人 </h1>
+</header>
+<div class="blank3"></div>
+<section class="wrap">
+   <div class="content">
+    {if $mem_list}
+    {foreach from="$mem_list" item="m"} 
+    	<a href="{$m.url}">
+        	<dl>
+            	<dt>{if $m.head_url neq ''}<img src="{$m.head_url}" border=0>{else}<img src="{$ectouch_themes}/images/get_avatar.png"  border=0>{/if} </dt>
+                <div>
+                  <h3>会员ID：{$m.user_name}</h3>
+                  <h3>昵&nbsp; 称：{if $m.nick_name}{$m.nick_name}{else}暂无{/if}</h3>
+                  <h3>关&nbsp; 注：{if $m.is_subscribe}{$m.sub_time}{else}未关注{/if}</h3>
+                <p>
+    </p></div>
+            </dl>
+        </a>
+    {/foreach}   
+    {else}
+      <div class="no_data">暂无相关数据</div>
+    {/if} 
+  </div>  
+  <!-- #BeginLibraryItem "/library/pager.lbi" --><!-- #EndLibraryItem -->
+  <!-- #BeginLibraryItem "/library/pages.lbi" --><!-- #EndLibraryItem -->
+</section>
+<!-- {/if} --> 
+
+<!--{if $action eq 'detail'}-->
+<header id="header">
+  <div class="header_l header_return"> <a class="ico_10" href="distribute.php?act=member&level={$level}"> 返回 </a> </div>
+  <h1> 会员详情 </h1>
+</header>
+<dl class="user_top">
+  <dt> {if $info.head_url neq ''}<img src="{$info.head_url}">{else}<img src="{$ectouch_themes}/images/get_avatar.png">{/if} </dt>
+  <dd>
+    <p>{if $info.nick_name}{$info.nick_name}{else}{$info.user_name}{/if}</p>
+    <p><span style="font-weight:bold">关注时间：{if $info.is_subscribe}{$info.subscribe_time}{else}未关注{/if}</span></p>
+  </dd>
+  <div class="user_distri_list">
+    <ul>
+      <li> 累计消费：￥{$info.sales_total}</li>
+      <li> 贡献收入：￥{$info.brokerage_total}</li>
+    </ul>
+  </div>
+  <div class="quan1"></div>
+  <div class="quan2"></div>
+  <div class="quan3"></div>
+</dl>
+<div class="blank3"></div>
+<section class="wrap">
+  <div class="list_box padd1 radius10" style="padding-top:0;padding-bottom:0;"> 
+    <ul>
+    {foreach from="$levels" item="level"}
+      <li><span class="uninclude">&nbsp; &nbsp; </span><span>{$info.sex}{$level.name}</span> <span class="person">{$level.persons}人</span>
+        <div class="son_list">
+          <ul>
+            <li><span class="icon">&nbsp; &nbsp; </span><span>人数</span> <span class="sp">{$level.persons}人</span></li>
+            <li><span class="icon">&nbsp; &nbsp; </span><span>消费金额</span> <span class="sp">￥{$level.sales}</span></li>
+            <li><span class="icon">&nbsp; &nbsp; </span><span>贡献收入</span> <span class="sp">￥{$level.brokerage}</span></li>
+          </ul>
+        </div>
+      </li>
+    {/foreach} 
+    </ul>
+  </div>
+  <div class="blank3"></div>
+  <div class="blank3"></div>
+  <div class="list_box padd1 radius10" style="padding-top:0;padding-bottom:0;"> 
+ </div>
+</section>
+
+<!--{/if}-->
+<!--{if $action eq 'qr_show'}-->
+<header id="header">
+  <div class="header_l header_return"> <a class="ico_10" href="distribute.php"> 返回 </a> </div>
+   <h1> 我的二维码 </h1>
+</header>
+<div class="blank3"></div>
+<section class="wrap">
+   <div class="content">
+    {if $qr}
+    	<img src="{$qr.qr_path}" width="90%" height="auto">  
+    {else}
+      <div class="no_data">暂无推广的二维码</div>
+    {/if} 
+  </div>  
+</section>
+<!-- {/if} --> 
+
+<div style="width:1px; height:1px; overflow:hidden">{foreach from=$lang.p_y item=pv}{$pv}{/foreach}</div>
+</body>
+<script type="text/javascript">
+{foreach from=$lang.clips_js item=item key=key}
+var {$key} = "{$item}";
+{/foreach}
+</script>
+</html>

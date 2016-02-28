@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>服务中心查询</title>
+	<meta charset="UTF-8">
+    <meta name="viewport" id="V" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link href="{$ectouch_themes}/ectouch.css" rel="stylesheet" type="text/css" />
+    <style>
+    .agent_list{ padding:10px; }
+	.agent_list li{ line-height:30px; max-height:60px; font-size:1.2em; border-bottom:1px #ccc solid}
+	/* 搜索 */
+#search{ height:100%; overflow:hidden; margin:1em 0.5em; padding:0.3em 0; background:#fff; border:1px solid #dfdfdf; position:relative; }
+#search input{ font-size:1em; height:2.6em; line-height:2.6em; font-family:'Microsoft YaHei',Arial, Helvetica, sans-serif; margin:0; border:0; outline:none; }
+#search .searchInput{ width:78%; float:left; padding:0 0.5em; }
+#search .btnSearch{ width:32px; height:32px; text-align:center; background:#fff; position:absolute; top:0.4em; right:0.6em; cursor:pointer; background:url(../images/icon_search.png) no-repeat; }
+    </style>
+	<script src="{$ectouch_themes}/js/jquery.min.js"></script>
+    <script language="javascript">
+	  var link_url = "svcenter.php?act=search&";
+      $(function(){
+		 $("#submit").click(function(){
+			if($("#k").val() == "")
+			{
+				alert('请输入搜索词');
+				return;
+			} 
+			location.href = link_url + "keys=" + $("#k").val();
+		 }); 
+	  });
+    </script>
+</head>
+<body>
+<header id="header">
+  <h1> 服务中心查询 </h1>
+  
+</header>
+<div class="blank3"></div>
+<section class="wrap">
+ <div id="search">
+          <input type="text" id="k" class="searchInput" placeholder="输入服务商名称、联系人或者地址关键词">
+          <input type="button" id="submit" class="btnSearch">
+  </div>
+  <div class="list_box padd1 radius10" style="padding-top:0;padding-bottom:0;"> 
+
+                 {if $keys}
+                   {if $svcenter}
+                    {foreach from=$svcenter item=sv name=sv}   
+                	<a href="svcenter.php?act=detail&id={$sv.sv_id}" class="clearfix"> 
+                    <div class="sv_list">
+                      <ul>
+                        <li>{$sv.sv_name} </li>
+                        <li>联系人： {$sv.linkman} {$sv.tel}</li>
+                        <li>地址：{$sv.area} {$sv.address} {$sv.tel}</li>
+                      </ul>  
+                    </div>
+                    <i style="margin-top:50px; "></i> </a> 
+                    {/foreach}
+                   {else}
+                     <li>
+                       没有查询到相关服务中心信息
+                     </li>
+                   {/if} 
+                  {else}
+                    <li>查询服务中心信息</li> 
+                  {/if}    
+  </div>
+</section>
+<!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
+</body>
+</html>

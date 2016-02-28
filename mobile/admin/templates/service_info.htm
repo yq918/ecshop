@@ -1,0 +1,43 @@
+<!-- $Id: order_info.htm 15544 2009-01-09 01:54:28Z zblikai $ -->
+
+{include file="pageheader.htm"}
+{insert_scripts files="./js/topbar.js,../data/static/js/utils.js,./js/listtable.js,./js/selectzone.js,../data/static/js/common.js"}
+
+<div class="list-div" style="margin-bottom: 5px">
+<table width="100%" cellpadding="3" cellspacing="1">
+  <tr>
+    <th colspan="4">售后服务详情</th>
+  </tr>
+  <tr>
+     <td><div align="right"><strong>售后服务单号：</strong></div></td>
+    <td>{$service.service_sn}</td>
+    <td><div align="right"><strong>所属订单号：</strong></div></td>
+    <td><a href="order.php?act=info&order_id={$service.order_id}">{$service.order_sn}</a></td>
+   
+  </tr>
+  <tr>
+    <td><div align="right"><strong>售后服务类型：</strong></div></td>
+    <td>{$service.stype}</td>
+    <td><div align="right"><strong>申请时间：</strong></div></td>
+    <td>{$service.add_time}</td>
+  </tr>
+  <tr>
+    <td><div align="right"><strong>联系人：</strong></div></td>
+    <td>{$service.consignee}</td>
+    <td><div align="right"><strong>联系电话：</strong></div></td>
+    <td>{$service.tel}</td>
+  </tr>
+  <tr>
+    <td><div align="right"><strong>问题描述：</strong></div></td>
+    <td colspan="3">{$service.question_desc}</td>
+  </tr>
+ <tr>
+    <td><div align="right"><strong>希望售后：</strong></div></td>
+    <td colspan="3">{$service.service_desc}</td>
+  </tr>
+
+
+</table>
+</div>
+
+{include file="pagefooter.htm"}

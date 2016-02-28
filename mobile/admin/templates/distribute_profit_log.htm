@@ -1,0 +1,68 @@
+<!-- $Id: log_list.htm 14928 2008-10-06 09:25:48Z testyang $ -->
+{if $full_page}
+{include file="pageheader.htm"}
+{insert_scripts files="../data/static/js/utils.js,./js/listtable.js"}
+
+<div class="form-div">
+<form method="post" action="profit_log.php?act=list&uid={$smarty.get.uid}" name="searchForm">
+  <strong>{$lang.label_user_name}</strong>{$user.nick_name}
+  <strong>佣金： </strong>￥{$user.brokerage_all}
+  <strong>一级佣金：</strong>￥{$user.brokerage_first}
+  <strong>二级佣金：</strong>￥{$user.brokerage_second}
+  <strong>三级佣金：</strong>￥{$user.brokerage_third}
+  </form>
+</div>
+<form method="post" action="" name="listForm">
+<div class="list-div" id="listDiv">
+{/if}
+
+  <table cellpadding="3" cellspacing="1">
+    <tr>
+      <th width="25%">贡献者</th>
+      <th>贡献金额</th>
+      <th>会员等级</th>
+      <th>订单号</th>
+      <th>订单金额</th>
+      <th>贡献时间</th>
+    </tr>
+    {foreach from=$log_list item=log}
+    <tr>
+      <td>{$log.buyer}</td>
+      <td align="right">￥{$log.brokerage}
+      </td>
+      <td align="center">{$log.rank} </td>
+      <td align="center">{$log.order_sn} </td>
+      <td align="right">￥{$log.order_price }
+      </td>
+      <td align="center">{$log.time}
+      </td>
+    </tr>
+    {foreachelse}
+    <tr><td class="no-records" colspan="6">{$lang.no_records}</td></tr>
+    {/foreach}
+  </table>
+<table id="page-table" cellspacing="0">
+  <tr>
+    <td align="right" nowrap="true">
+    {include file="page.htm"}
+    </td>
+  </tr>
+</table>
+
+{if $full_page}
+</div>
+</form>
+
+<script type="text/javascript" language="javascript">
+  <!--
+  listTable.recordCount = {$record_count};
+  listTable.pageCount = {$page_count};
+
+  {foreach from=$filter item=item key=key}
+  listTable.filter.{$key} = '{$item}';
+  {/foreach}
+
+  //-->
+</script>
+{include file="pagefooter.htm"}
+{/if}

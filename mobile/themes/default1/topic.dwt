@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>{$topic.title}_{$page_title}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<link href="{$ectouch_themes}/images/touch-icon.png" rel="apple-touch-icon-precomposed" />
+<link href="{$ectouch_themes}/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+<link href="{$ectouch_themes}/ectouch.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+.itemlist img{width:100%}
+</style>
+{if $topic.css neq ''}
+<style type="text/css">
+  {$topic.css}
+</style>
+{/if}
+<style type="text/css">
+h6,h3{
+font-family:"黑体";
+background:url({$title_pic}) repeat-x 0 0;
+text-align:left;
+height:38px;
+line-height:38px;
+padding-left:20px;
+font-weight:200;
+font-size:18px;
+margin-bottom:15px;
+color:#fff;
+}
+.goodsbox{float: left; width: 49%; margin-bottom:10px; }
+.goodsbox1{border: 1px solid #e7e8e3; background-color: #fff;  box-shadow: 1px 1px 3px rgba(128,128,128,.2); padding:10px;}
+.goodsbox .imgbox{ margin:0 0 5px 0; overflow:hidden;} 
+.goodsbox .imgbox img{width:100%}
+.sort_box{}	
+.sort_box a{
+color:#222;
+}
+</style>
+</head>
+
+<body>
+<div id="page">
+  <header id="header">
+    <div class="header_l"> <a class="ico_10" onClick="javascript:history.back();"> 返回 </a> </div>
+    <h1> {$topic.title} </h1>
+    <div class="header_r"></div>
+  </header>
+</div>
+<div class="blank3"></div>
+<section class="wrap" style="padding-bottom:5rem">
+<div class="radius10 itemlist" style="padding:10px;">
+
+<div class="banner">
+  <img border="0" src="{$topic.topic_img}">
+</div>  
+
+
+<div class="intro">
+{if $topic.intro neq ''}
+ {$topic.intro}
+ <br /><br />
+{/if}
+</div>
+
+<!-- {if $topic.title_pic eq ''} -->
+    
+     <!-- {foreach from=$sort_goods_arr item=sort key=sort_name} -->
+    <div class="box">
+    <div class="box_1 clearfix">
+     <h3><span>{$sort_name}</span></h3>
+    <div class="centerPadd">
+    <!-- {foreach from=$sort item=goods name=goods} -->
+    <div class="goodsbox" style="{if $smarty.foreach.goods.iteration mod 2 eq 0}float:right{/if}">
+     <div class="goodsbox1">
+       <div class="imgbox"><a href="{$goods.url}"><img src="http://gaosky.hk4.yunvhs.com/{$goods.goods_thumb}" alt="{$goods.name|escape:html}" class="goodsimg" /></a></div>
+       <a href="{$goods.url}" title="{$goods.name|escape:html}">{$goods.short_style_name}</a><br />
+       <font class="f1">
+       <!-- {if $goods.promote_price neq ""} -->
+      {$goods.promote_price}
+      <!-- {else}-->
+      {$goods.shop_price}
+      <!--{/if}-->
+       </font>
+    </div>
+    </div>
+    <!--{/foreach}-->
+    </div>
+    </div>
+    </div>
+    <!--{/foreach}-->
+    <!-- {else} -->
+		
+		
+		 <!-- {foreach from=$sort_goods_arr item=sort key=sort_name} -->
+    <div class="clearfix">
+    <h6>{$sort_name}</h6>
+		<div class="sort_box clearfix">
+    <!-- {foreach from=$sort item=goods name=no} -->
+    <div class="goodsbox" style="{if $smarty.foreach.no.iteration mod 2 eq 0}float:right{/if}">
+    <div class="goodsbox1">
+       <div class="imgbox"><a href="{$goods.url}"><img src="http://gaosky.hk4.yunvhs.com/{$goods.goods_thumb}" alt="{$goods.name|escape:html}" /></a></div>
+       <a href="{$goods.url}" title="{$goods.name|escape:html}">{$goods.short_style_name}</a><br />
+       <!-- {if $goods.promote_price neq ""} -->
+       {$goods.promote_price}<br />
+       <!-- {else}-->
+       {$goods.shop_price}<br />
+       <!--{/if}-->
+    </div>
+    </div>
+    <!--{/foreach}-->
+		</div>
+    </div>
+
+    <!--{/foreach}-->
+
+  
+    <!-- {/if} -->    
+
+</div>
+</section>
+  <!-- #BeginLibraryItem "/library/page_footer.lbi" --><!-- #EndLibraryItem -->
+</body>
+</html>

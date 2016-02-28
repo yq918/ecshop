@@ -1,0 +1,42 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<div id="content" class="footer mr-t20">
+  <div class="in">
+    <div class="search_box">
+      <form method="post" action="search.php" name="searchForm" id="searchForm_id">
+        <input name="keywords" type="text" id="keywordfoot" />
+        <button class="ico_07" type="submit" value="搜索" onclick="return check('keywordfoot')"> </button>
+      </form>
+    </div>
+    <a href="./" class="homeBtn"> <span class="ico_05"> </span> </a> <a href="#top" class="gotop"> <span class="ico_06"> </span> <p> TOP </p>
+    </a>
+  </div>
+  <p class="link region" > <p style="color:#333">公司名称：{$shop_address}</p>
+	<p style="color:#333">联系电话：{$service_phone}</p>
+	<p style="color:#333">Copyright {$copyright} All Rights Reserved</p></p>
+
+
+  <div style="height:50px;">&nbsp;</div>
+</div>
+<link href="{$ectouch_themes}/css/global_nav.css?v=20140408" type="text/css" rel="stylesheet"/>
+<!--全局导航-Start-->
+<div class="gz gz-nav--current">
+    <div class="gz-nav__nav-wrap">
+      <dl>
+        <dd class="headurl">{if $distributor.head_url neq ''}<img src="{$distributor.head_url}" border=0>{else}<img src="{$ectouch_themes}/images/get_avatar.png"  border=0>{/if}</dd>
+        <dd class="source">来自好友<span>{$distributor.nick_name}</span>的推荐</dd>
+        <dd class="button"><input type="button" name="quick_sub" id="quick_sub" value="我也要开店" onClick="location.href='{$wxconf.subscribe_guide_page}'"></dd>
+      </dl>
+    </div>     
+</div>
+<!--全局导航-End-->
+<script type="text/javascript" src="{$ectouch_themes}/js/zepto.min.js?v=20140408"></script>
+<script src="{$ectouch_themes}/js/lazyload.js"></script>
+<script type="text/javascript">
+$(function(){
+//延迟加载图片
+	$("img:not(.slideimg)").lazyload({	 
+       effect : "fadeIn" 
+    }); 
+});	
+
+</script>

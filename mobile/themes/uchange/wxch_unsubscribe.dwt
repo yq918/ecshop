@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>系统提示</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
+<link href="{$ectouch_themes}/images/touch-icon.png" rel="apple-touch-icon-precomposed" />
+<link href="{$ectouch_themes}/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+<link href="{$ectouch_themes}/ectouch.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+<header id="header" >
+  <h1> 系统提示</h1>
+</header>
+<div class="blank3"></div>
+<section class="wrap">
+  <div class="art_content radius10">
+    <dl>
+      <h1 class="alert">提示：请关注公众号后，从公众号继续访问</h1>
+      <dd><input type="button" name="sub" id="sub" value="点击去关注公众号" class="msg_btn" onClick="location.href='{$wxconf.subscribe_guide_page}'"></dd>
+    </dl>
+  </div>
+</section>
+<!-- #BeginLibraryItem "/library/page_footer_art.lbi" --><!-- #EndLibraryItem -->
+</body>
+</html>
