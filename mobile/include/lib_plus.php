@@ -101,9 +101,11 @@ function shop_price_arr($cart_goods) {
 		$ret['save'] = $ret['should_pay']-$ret['pay'];
 	}
 	//print_r($ret);
+	$pays = $ret['pay'];
 	foreach ($ret as $key=>$val){
 		$ret[$key] = price_format($val);
 	}
+	$ret['pays'] = $pays;
 	return $ret;
 }
 ?>

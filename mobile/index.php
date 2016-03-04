@@ -9,7 +9,9 @@ define('IN_ECTOUCH', true);
 require(dirname(__FILE__) . '/include/init.php');
 require(ROOT_PATH . 'include/lib_weixintong.php');
 //识别用户
-//$_SESSION['user_id']=2;
+ $_SESSION['user_id']=2;
+ $_SESSION['wechat_id']=2;
+ 
 $user_id = $wechat->get_userid();
 //判断是否关注
 if(!$wechat->is_subscribe_byid($user_id)){

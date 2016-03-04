@@ -1712,6 +1712,39 @@ function get_consignee($user_id)
     }
 }
 
+
+
+
+
+
+function get_counponData($counpon_number,$pays=0)
+{  
+        $arr = array();		 
+        $sql = "SELECT user_id,coupon_price,coupon_type,discount,coupon_status".
+                    " FROM " . $GLOBALS['ecs']->table('user_coupon') ."  
+                      WHERE coupon_sn='$counpon_number'";
+        $arr = $GLOBALS['db']->getRow($sql);  
+		
+		if(empty($arr)){
+			   return 0;
+		}		
+		if($arr['coupon_status'] != '0')
+		{
+			return -1;
+		}		
+ 		if($arr['coupon_type'] == '0'){
+			$price = number_format($arr['coupon_price'], 2, '.', '');			 		
+			}
+		if($arr['coupon_type'] == '1'){
+			$price = number_format($pays*$arr['discount'], 2, '.', '');			 			
+			}
+		 return '￥'.$price; 
+ }
+
+
+
+
+
 /**
  * 查询购物车（订单id为0）或订单中是否有实体商品
  * @param   int     $order_id   订单id

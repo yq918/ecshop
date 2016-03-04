@@ -608,6 +608,25 @@ var card = document.getElementsByName('card');
       </div>
     </section>
     
+    
+    <h4 class="order_title">使用优惠券或打折卡</h4>
+     <section class="order_box padd1" style="padding-top:0.3rem;padding-bottom:0.3rem;">
+      <div class="table_box table_box2" style=" margin-bottom:0.5rem">  
+		      
+		<div class="dl_box">
+		 <dl style="width:75%">
+				<dd class="c333">优惠卷或打折卡编号:</dd>
+				<dd ><input placeholder="请输入优惠卷或打折卡编号" name="counpon_number" id="counpon_number" type="text"   size="20"  /> </dd>
+                <dd class="dd1"><input   type="button" name="but" value="优惠兑换"  onClick="checkCoupon()" /></dd>
+                <input type="hidden" value="<?php echo $this->_var['shop_price_arr']['pays']; ?>" id="pricepay"/>
+		 </dl>		 
+		</div> 
+      </div>
+    </section>
+    
+    
+    
+    
     <div class="blank3"> </div>
     <h4 class="order_title">返佣</h4>
     <section class="order_box padd1" style="padding-top:0.3rem;padding-bottom:0.3rem;">
@@ -1040,6 +1059,29 @@ jQuery(function($){
 <?php echo $this->fetch('library/public_link.lbi'); ?> 
 </body>
 <script type="text/javascript">
+  function checkCoupon()
+  {
+	var coun=  $("#counpon_number").val(); 
+	var pricepay = $("#pricepay").val();
+    if(coun.length ==0 || coun.length>18){
+		  alert('请输入优惠卷或打折卡编号');
+		  return false;
+		 }
+   if(coun.length <10 || coun.length>18){
+		  alert('优惠卷或打折卡编号格式错误');
+		  return false;
+	 }
+  $.post("./flow.php?step=checkcounpon",{counpon_number:coun,pays:pricepay},function(result){
+     // $("span").html(result);
+	 var code = result.code;
+	 if(code == '1'){
+		  alert(result.msg);
+		 }else{
+			 alert(result.counponPrice);
+			 }	 
+   },'json');  
+  }
+
 var process_request = "<?php echo $this->_var['lang']['process_request']; ?>";
 <?php $_from = $this->_var['lang']['passport_js']; if (!is_array($_from) && !is_object($_from)) { settype($_from, 'array'); }; $this->push_vars('key', 'item');if (count($_from)):
     foreach ($_from AS $this->_var['key'] => $this->_var['item']):

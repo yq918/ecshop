@@ -20,7 +20,7 @@ $db_user   = "root";
 
 // database password
 
-$db_pass   = "1qaz3edc";
+$db_pass   = "";
 
 
 

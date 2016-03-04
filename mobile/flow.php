@@ -979,6 +979,46 @@ elseif ($_REQUEST['step'] == 'checkout')
     /* 保存 session */
     $_SESSION['flow_order'] = $order;
 }
+elseif( $_REQUEST['step']== 'checkcounpon')
+{  
+	 if($user_id == 0)
+      { 
+	   /* 用户没有登转向到登录页面 */
+        $data = array('code' => '1','msg' => '请登录');
+		echo  json_encode($data);		 
+        exit;
+    }	 
+	$counpon_number = isset($_POST['counpon_number'])?$_POST['counpon_number']:'';
+	$pays = isset($_POST['pays'])?$_POST['pays']:0;
+	
+ 
+	if(empty($counpon_number))
+	{
+	    $data = array('code' => '1','msg' => '请输入优惠卷或打折卡编号');
+		echo  json_encode($data);
+		exit;
+	}	
+	if(strlen($counpon_number) <10 || strlen($counpon_number)>18){		 
+		 $data = array('code' => '1','msg' => '优惠卷或打折卡编号格式错误');
+		 echo  json_encode($data);
+		 exit;
+	 }
+	 
+	$counponPrice = get_counponData($counpon_number,$pays);	
+	if($counponPrice < '0'){
+		  $data = array('code' => '1','msg' => '优惠卷或打折卡编号已使用');
+		  echo  json_encode($data);
+		  exit;
+		}	
+	if($counponPrice == '0'){
+		  $data = array('code' => '1','msg' => '优惠卷或打折卡编号不存在');
+		  echo  json_encode($data);
+		  exit;
+		}	 
+	 $data = array('code' => '0','msg' => '','counponPrice' => $counponPrice);
+	 echo json_encode($data);
+	 exit;	 
+}
 elseif ($_REQUEST['step'] == 'select_shipping')
 {
     /*------------------------------------------------------ */
