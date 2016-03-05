@@ -2168,6 +2168,8 @@ elseif ($_REQUEST['step'] == 'done')
 			include ('wxch_order.php');
 		}
     /* 订单信息 */
+	
+	$total['amount_formated'] =  price_format($order['order_amount'], false);
     $smarty->assign('order',      $order);
     $smarty->assign('total',      $total);
     $smarty->assign('goods_list', $cart_goods);
