@@ -1188,7 +1188,7 @@ function deleteRepeat($array){
  */
 function get_user_coupon_list($user_id, $num = 10, $start = 0)
 {
-    $sql = "SELECT * FROM " .$GLOBALS['ecs']->table('user_coupon')." WHERE user_id = '" .$user_id. "'";
+    $sql = "SELECT * FROM " .$GLOBALS['ecs']->table('user_coupon')." WHERE user_id = '" .$user_id. "' order by id desc ";
     $res = $GLOBALS['db']->selectLimit($sql, $num, $start);
     while ($row = $GLOBALS['db']->fetchRow($res))
     {
@@ -1202,7 +1202,7 @@ function get_user_voucher_list($user_id, $num = 10, $start = 0)
 {
     $time=7*24*3600;
     $now=time();
-    $sql = "SELECT * FROM " .$GLOBALS['ecs']->table('user_voucher')." WHERE user_id = '" .$user_id. "'";
+    $sql = "SELECT * FROM " .$GLOBALS['ecs']->table('user_voucher')." WHERE user_id = '" .$user_id. "' order by id desc ";
     $res = $GLOBALS['db']->selectLimit($sql, $num, $start);
     while ($row = $GLOBALS['db']->fetchRow($res))
     {

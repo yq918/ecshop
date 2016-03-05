@@ -62,7 +62,7 @@ array('login','act_login','register','act_register','act_edit_password','get_pas
 
 $ui_arr = array('register', 'login', 'profile', 'order_list', 'order_detail', 'order_tracking', 'address_list', 'act_edit_address', 'collection_list',
 
-'message_list', 'tag_list', 'get_password', 'reset_password', 'booking_list', 'add_booking', 'account_raply',
+'message_list', 'tag_list', 'get_password', 'reset_password', 'booking_list', 'add_booking', 'account_raply','coupon_list',
 
 'account_deposit', 'account_log', 'account_detail', 'act_account', 'pay', 'default', 'bonus', 'group_buy', 'group_buy_detail', 'affiliate', 'comment_list','validate_email','track_packages', 'transform_points','qpassword_name', 'get_passwd_question', 'check_answer','point','order_service','service_add');
 
@@ -6124,12 +6124,49 @@ elseif ($action == 'coupon_list'){
     $page = isset($_REQUEST['page']) ? intval($_REQUEST['page']) : 1;
     $record_count = $db->getOne("SELECT COUNT(*) FROM " .$ecs->table('user_coupon'). " WHERE user_id = '$user_id'");
 
-    $pager = get_pager('user.php', array('act' => $action), $record_count, $page);
+    $pager = get_pager('user.php', array('act' => $action), $record_count, $page,10);
     $data = get_user_coupon_list($user_id, $pager['size'], $pager['start']);
     $smarty->assign('pager', $pager);
     $smarty->assign('data',$data);
     $smarty->assign('action','coupon_list');
     $smarty->display('user_coupon.dwt');
+}elseif($action == 'async_coupon_list'){
+    include_once(ROOT_PATH . 'include/lib_transaction.php');
+    $start = $_POST['last'];
+    $limit = $_POST['amount'];
+    $data = get_user_coupon_list($user_id, $limit,$start);
+    if($data){
+        foreach($data as $k=>$v){
+            if($v['coupon_type']>0){
+                $v['coupon_type']='打折卡';
+            }else{
+                $v['coupon_type']='优惠券';
+            }
+            if($v['coupon_status']==0){
+                $v['coupon_status']='未使用';
+            }elseif($v['coupon_status']==1){
+                $v['coupon_status']='已使用';
+            }else{
+                $v['coupon_status']='已兑换';
+            }
+            $asyList[] = array(
+                'order_content' => '<table width="100%" border="0" cellpadding="5" cellspacing="0" class="ectouch_table_no_border">
+            <tr>
+                <td width="10%" align="center">'.$v['id'].'</td>
+                <td width="30%" align="center">'.$v['coupon_sn'].'</td>
+                <td width="20%" align="center">'.$v['coupon_price'].'</td>
+                <td width="10%" align="center">'.$v['coupon_note'].'</td>
+                <td width="10%" align="center">'.$v['discount'].'</td>
+                 <td width="10%" align="center">'.$v['coupon_type'].'</td>
+                 <td width="10%" align="center">'.$v['coupon_status'].'</td>
+            </tr>
+
+          </table>'
+
+            );
+        }
+        echo json_encode($asyList);
+    }
 }//生成优惠券界面
 elseif($action == 'coupon_add') {
     $level = getUserLevel($user_id);
@@ -6178,6 +6215,41 @@ elseif($action == 'voucher_list'){
     $smarty->assign('data',$data);
     $smarty->assign('action','voucher_list');
     $smarty->display('user_coupon.dwt');
+}elseif($action == 'async_voucher_list'){
+    $start = $_POST['last'];
+    $limit = $_POST['amount'];
+    include_once(ROOT_PATH .'include/lib_transaction.php');
+
+    $data = get_user_voucher_list($user_id, $limit,$start);
+    if($data){
+        foreach($data as $k=>$v){
+            if($v['voucher_type']>0){
+                $v['voucher_type']='已兑换';
+            }else{
+                $v['voucher_type']='未兑换';
+            }
+            if($v['opt']==1){
+                $v['opt']='<a href="user.php?act=voucher_add&id={$item.id}" style="color:blue">兑换</a>';
+            }else{
+                $v['opt']='';
+            }
+            $asyList[] = array(
+                'order_content' => '<table width="100%" border="0" cellpadding="5" cellspacing="0" class="ectouch_table_no_border">
+            <tr>
+                <td width="10%" align="center">'.$v['id'].'</td>
+                <td width="30%" align="center">'.$v['voucher_sn'].'</td>
+                <td width="20%" align="center">'.$v['coupon_sn'].'</td>
+                <td width="10%" align="center">'.$v['voucher_price'].'</td>
+                <td width="10%" align="center">'.$v['voucher_type'].'</td>
+                 <td width="10%" align="center">'.$v['opt'].'</td>
+            </tr>
+
+          </table>'
+
+            );
+        }
+        echo json_encode($asyList);
+    }
 }//兑换页面
 elseif($action == 'voucher_add'){
     $id=isset($_REQUEST['id'])?$_REQUEST['id']:0;

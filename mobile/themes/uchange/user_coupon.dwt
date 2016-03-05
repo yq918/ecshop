@@ -19,56 +19,45 @@
 <div id="tbh5v0">
   <div class="login"> 
 
-
-
     <!-- {if $action eq 'coupon_list'} 优惠券列表 start-->
     <header id="header">
       <div class="header_l header_return"> <a class="ico_10" href="user.php">返回 </a> </div>
       <h1> 优惠券列表 <a href="user.php?act=coupon_add_type" style="float:right;color:blue;margin-right:5px"> 创建打折卡</a>
       <a href="user.php?act=coupon_add" style="float:right;color:blue;margin-right:30px"> 创建优惠券</a></h1>
     </header>
-    <section class="wrap bonus_list">
+     <table width="100%" border="0" cellpadding="5" cellspacing="0">
+                     	<th width="10%">优惠券id</th>
+                     	<th width="30%">优惠券编号</th>
+                     	<th width="20%">优惠券价格</th>
+                     	<th width="10%">优惠券备注</th>
+                     	<th width="10%">折扣</th>
+                     	<th width="10%">优惠券类型</th>
+                     	<th width="10%">优惠券状态</th>
+                </table>
+    <section class="wrap coupon_list">
 	  <section class="order_box padd1 radius10 single_item">
-      <table width="100%" border="0" cellpadding="5" cellspacing="0" class="ectouch_table">
-        <tr>
-          <th align="center">序号</th>
-          <th align="center">优惠券编号</th>
-          <th align="center">优惠券金额</th>
-          <th align="center">优惠券来源</th>
-          <th align="center">折扣</th>
-          <th align="center">优惠券类型</th>
-          <th align="center">状态</th>
-        </tr>
-        <!-- {if $data} -->
-        <!--{foreach from=$data item=item}-->
-        <tr>
-          <td align="center">{$item.id|default:N/A}</td>
-          <td align="center">{$item.coupon_sn}</td>
-          <td align="center">{$item.coupon_price}</td>
-          <td align="center">{$item.coupon_note}</td>
-          <td align="center">{$item.discount}</td>
-          <td align="center">{if $item.coupon_type eq 1}打折卡{else}优惠券{/if}</td>
-          <td align="center">{if $item.coupon_status eq 1}已使用{elseif $item.coupon_status eq 2}已兑换{else}未使用{/if}</td>
 
-        </tr>
-        <!--{/foreach}--> 
-        <!-- {else} -->
-        <tr>
-          <td colspan="6" bgcolor="#FFFFFF">您还没有优惠券</td>
-        </tr>
-        <!-- {/if} -->
+      <table width="100%" border="0" cellpadding="5" cellspacing="0" class="ectouch_table">
+           	<tr>
+             	<td class="order_content" ></td>
+             </tr>
       </table>
       </section>
 
-	 <!-- <section class="order_box padd1 radius10">
-      <form name="addBouns" action="user.php" method="post" onSubmit="return addBonus()" style="text-align:center">
-        <input  placeholder="{$lang.bonus_number}" name="bonus_sn" type="text" class="inputBg_touch" style="margin-bottom:10px" />
-        <input type="hidden" name="act" value="act_add_bonus" class="inputBg" />
-        <input type="submit" class="c-btn3"   value="{$lang.add_bonus}" />
-      </form>
-      </section>-->
-    </section>
-    <!-- {/if} --> 
+    <a href="javascript:;" style="text-align:center" class="get_more"></a>
+        </section>
+    	<script type="text/javascript" src="{$ectouch_themes}/js/jquery.more.js"></script>
+        <script type="text/javascript">
+        jQuery(function($){
+        	$('.coupon_list').more({'address': 'user.php?act=async_coupon_list', amount:5, 'spinner_code':'<div style="text-align:center; margin:10px;"><img src="{$ectouch_themes}/images/loader.gif" /></div>'})
+    		$(window).scroll(function () {
+    			if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+    				$('.get_more').click();
+    			}
+    		});
+        });
+        </script>
+    <!-- {/if} -->
     <!--优惠券列表结束-->
     {if $action eq 'coupon_add'}
     <!--生成优惠券界面开始-->
@@ -112,44 +101,39 @@
       <div class="header_l header_return"> <a class="ico_10" href="user.php">返回 </a> </div>
       <h1> 兑换券列表 </h1>
     </header>
-    <section class="wrap bonus_list">
+    <table width="100%" border="0" cellpadding="5" cellspacing="0">
+    <tr>
+              <th align="center">序号</th>
+              <th align="center">兑换券编号</th>
+              <th align="center">优惠券编号</th>
+              <th align="center">兑换券金额</th>
+              <th align="center">兑换券状态</th>
+              <th align="center">操作</th>
+            </tr>
+    </table>
+    <section class="wrap voucher_list">
 	  <section class="order_box padd1 radius10 single_item">
       <table width="100%" border="0" cellpadding="5" cellspacing="0" class="ectouch_table">
-        <tr>
-          <th align="center">序号</th>
-          <th align="center">兑换券编号</th>
-          <th align="center">优惠券编号</th>
-          <th align="center">兑换券金额</th>
-          <th align="center">兑换券状态</th>
-          <th align="center">操作</th>
+
+       <tr>
+            <td class="order_content" ></td>
         </tr>
-        <!-- {if $data} -->
-        <!--{foreach from=$data item=item}-->
-        <tr>
-          <td align="center">{$item.id|default:N/A}</td>
-          <td align="center">{$item.voucher_sn}</td>
-          <td align="center">{$item.coupon_sn}</td>
-          <td align="center">{$item.voucher_price}</td>
-          <td align="center">{if $item.voucher_type eq 1}已兑换{else}未兑换{/if}</td>
-          <td align="center">{if $item.opt eq 1}<a href="user.php?act=voucher_add&id={$item.id}" style="color:blue">兑换</a>{/if}</td>
-        </tr>
-        <!--{/foreach}-->
-        <!-- {else} -->
-        <tr>
-          <td colspan="6" bgcolor="#FFFFFF">您还没有兑换券</td>
-        </tr>
-        <!-- {/if} -->
       </table>
       </section>
+    <a href="javascript:;" style="text-align:center" class="get_more"></a>
+  </section>
+        	<script type="text/javascript" src="{$ectouch_themes}/js/jquery.more.js"></script>
+            <script type="text/javascript">
+            jQuery(function($){
+            	$('.voucher_list').more({'address': 'user.php?act=async_voucher_list', amount:5, 'spinner_code':'<div style="text-align:center; margin:10px;"><img src="{$ectouch_themes}/images/loader.gif" /></div>'})
+        		$(window).scroll(function () {
+        			if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+        				$('.get_more').click();
+        			}
+        		});
+            });
+            </script>
 
-	 <!-- <section class="order_box padd1 radius10">
-      <form name="addBouns" action="user.php" method="post" onSubmit="return addBonus()" style="text-align:center">
-        <input  placeholder="{$lang.bonus_number}" name="bonus_sn" type="text" class="inputBg_touch" style="margin-bottom:10px" />
-        <input type="hidden" name="act" value="act_add_bonus" class="inputBg" />
-        <input type="submit" class="c-btn3"   value="{$lang.add_bonus}" />
-      </form>
-      </section>-->
-    </section>
     <!-- {/if} -->
     <!--优惠券列表结束-->
     <!-- #BeginLibraryItem "/library/link_to.lbi" --><!-- #EndLibraryItem -->
