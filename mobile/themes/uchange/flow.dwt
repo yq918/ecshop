@@ -598,10 +598,9 @@ var card = document.getElementsByName('card');
 				<dd ><input placeholder="请输入优惠卷或打折卡编号" name="counpon_number" id="counpon_number" type="text"   size="20"  /> </dd>
                 <dd class="dd1" id="butnhide"><input   type="button" name="but" value="优惠兑换" id="butn"  onClick="checkCoupon()" /></dd>
                 
-                  <dd class="dd1" id="cbutnhide" style="display:none"><input   type="button" name="cbut" value="重新输入" id="cbutn"  onClick="clearCoupon()" /></dd>
-                
-                <input type="hidden" value="{$shop_price_arr.pays}" id="pricepay"/>
-                
+                  <dd class="dd1" id="cbutnhide" style="display:none"><input   type="button" name="cbut" value="重新输入" id="cbutn"  onClick="clearCoupon()" /></dd>      
+                            
+                <input type="hidden" value="{$shop_price_arr.pays}" id="pricepay"/>                
                 <input type="hidden" value="0" id="counponPrice"/>
                 
 		 </dl>		 
@@ -1036,6 +1035,8 @@ jQuery(function($){
 <!-- #BeginLibraryItem "/library/public_link.lbi" --><!-- #EndLibraryItem --> 
 </body>
 <script type="text/javascript">
+
+ // 兑换优惠卷
   function checkCoupon()
   {
 	var coun=  $("#counpon_number").val(); 
@@ -1080,6 +1081,7 @@ jQuery(function($){
   }
   
   
+  //清除输入
   function clearCoupon()
   {
 	    var pricesave = $("#pricesave").val();
@@ -1088,7 +1090,9 @@ jQuery(function($){
 	    $("#payprice").text('￥'+pricepay+'元');         //实际支付金额
 	    $("#butn").removeAttr("disabled");  
 	    $("#counpon_number").removeAttr("disabled");  
-		$("#counpon_number").val('请输入优惠卷或打折卡编号');
+		//$("#counpon_number").val('请输入优惠卷或打折卡编号');
+		$("#counpon_number").val('');
+		$("#counpon_number").attr('placeholder','请输入优惠卷或打折卡编号');
 		$("#butnhide").show();
         $("#cbutnhide").hide(); 
   }
