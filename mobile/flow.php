@@ -1915,6 +1915,9 @@ elseif ($_REQUEST['step'] == 'done')
 		 exit;
 		} 											 
 	$order['order_amount'] = $order['order_amount'] -  $counponPrice;	
+	if($counponPrice > 0 ){
+		  $order['coupon_sn'] = $counponNumber;
+		}
 	if($order['order_amount'] < 0){
 		  $order['order_amount'] = 0;
 		} 
