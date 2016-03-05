@@ -1738,7 +1738,7 @@ function get_counponData($counpon_number,$pays=0)
 		if($arr['coupon_type'] == '1'){
 			$price = number_format($pays*$arr['discount'], 2, '.', '');			 			
 			}
-		 return '￥'.$price; 
+		 return $price; 
  }
 
 

@@ -35,7 +35,7 @@ var $wxid = "{$wxid}";
   {insert_scripts files='showdiv.js'} 
 <script type="text/javascript">
 
-	$(function(){
+	$(function(){		
 		//+-
  		$('.shopcart').find('.psprocount a').click(function(){
 			var $id = $(this).attr('data-id');
@@ -864,7 +864,8 @@ var card = document.getElementsByName('card');
           return true;
         }
 
-        {/literal}
+        {/literal}		
+		
   </script> 
   <!-- Tab切换（高度自适应示范） -->
   <div id="leftTabBox" class="loginBox">
@@ -1013,7 +1014,8 @@ var card = document.getElementsByName('card');
 </section>
 
 <script type="text/javascript">
-jQuery(function($){
+jQuery(function($){ 
+		
 	$('.hd ul li').click(function(){
 		var index = $('.hd ul li').index(this);
 		$(this).addClass('on').siblings('li').removeClass('on');
@@ -1042,17 +1044,18 @@ jQuery(function($){
 		  alert('优惠卷或打折卡编号格式错误');
 		  return false;
 	 }
-  $.post("./flow.php?step=checkcounpon",{counpon_number:coun,pays:pricepay},function(result){
-     // $("span").html(result);
+  $.post("./flow.php?step=checkcounpon",{counpon_number:coun,pays:pricepay},function(result){    
 	 var code = result.code;
 	 if(code == '1'){
 		  alert(result.msg);
 		 }else{
-			 alert("兑换成功，优惠金额为:"+result.counponPrice);
-			  $("#shop_price_save").text('');
-			  $("#shop_price_save").text(pricesave+result.counponPrice+'元')
-			 alert(pricesave);
-			 }	 
+			  alert("兑换成功，优惠金额为:￥"+result.counponPrice+'元');
+			  $("#shop_price_save").text(''); 	
+			  pricesave = parseFloat(pricesave);
+			  var counponPrice = 	parseFloat(result.counponPrice);	
+			  counponPrice = counponPrice+pricesave;
+			  $("#shop_price_save").text(counponPrice+'元');
+ 			 }	 
    },'json');  
   }
 
@@ -1065,4 +1068,8 @@ var compare_no_goods = "{$lang.compare_no_goods}";
 var btn_buy = "{$lang.btn_buy}";
 var is_cancel = "{$lang.is_cancel}";
 var select_spe = "{$lang.select_spe}";
+var coun=  $("#counpon_number").val();  
+if(coun.length >=10 && coun.length<18){
+	   checkCoupon();
+	 } 
 </script>
