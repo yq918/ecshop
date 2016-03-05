@@ -1139,7 +1139,7 @@ var btn_buy = "{$lang.btn_buy}";
 var is_cancel = "{$lang.is_cancel}";
 var select_spe = "{$lang.select_spe}";
 var coun=  $("#counpon_number").val();  
-if(coun!= '请输入优惠卷或打折卡编号' && coun.length >=10 && coun.length<18){
+if(coun!= '请输入优惠卷或打折卡编号' && coun.length >=10 && coun.length<=30){
 	   checkCoupon();
 	 } 
 </script>
