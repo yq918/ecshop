@@ -639,7 +639,7 @@ var card = document.getElementsByName('card');
 		 <dl>
 		 <dl>
               <dd class="c333">优惠金额</dd>
-				<dd ><?php echo $this->_var['shop_price_arr']['save']; ?></dd>
+				<dd id="shop_price_save"><?php echo $this->_var['shop_price_arr']['save']; ?></dd> <input type="hidden" id="pricesave" value="<?php echo $this->_var['shop_price_arr']['saves']; ?>"/>
 		 </dl>
 		 <dl>
               <dd class="c333">实际支付</dd>
@@ -1063,6 +1063,8 @@ jQuery(function($){
   {
 	var coun=  $("#counpon_number").val(); 
 	var pricepay = $("#pricepay").val();
+	var pricesave = $("#pricesave").val();
+	
     if(coun.length ==0 || coun.length>18){
 		  alert('请输入优惠卷或打折卡编号');
 		  return false;
@@ -1077,7 +1079,10 @@ jQuery(function($){
 	 if(code == '1'){
 		  alert(result.msg);
 		 }else{
-			 alert(result.counponPrice);
+			 alert("兑换成功，优惠金额为:"+result.counponPrice);
+			  $("#shop_price_save").text('');
+			  $("#shop_price_save").text(pricesave+result.counponPrice+'元')
+			 alert(pricesave);
 			 }	 
    },'json');  
   }
