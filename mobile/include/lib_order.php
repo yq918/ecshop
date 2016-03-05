@@ -1751,7 +1751,7 @@ function get_counponData($counpon_number,$pays=0,$is_array = false)
 //根据会员级别与优惠卷金额返回相应的可兑换金额
 function getUserVoucherExa($type,$coupon_price){	
 	 $sql = "SELECT voucher_price ".
-                    " FROM " . $GLOBALS['ecs']->table('voucher_exa') ."  
+                    " FROM " . $GLOBALS['ecs']->table('user_voucher_exa') ."  
                       WHERE type=$type AND coupon_price=$coupon_price";
       $arr = $GLOBALS['db']->getRow($sql); 
 	  return  $arr; 
