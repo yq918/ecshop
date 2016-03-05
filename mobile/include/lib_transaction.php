@@ -1177,4 +1177,43 @@ function deleteRepeat($array){
     }
     return $array;
 }
+/**
+ *
+ * @access  public
+ * @param   int         $user_id         用户ID
+ * @param   int         $num             列表显示条数
+ * @param   int         $start           显示起始位置
+ *
+ * @return  array       $arr             红保列表
+ */
+function get_user_coupon_list($user_id, $num = 10, $start = 0)
+{
+    $sql = "SELECT * FROM " .$GLOBALS['ecs']->table('user_coupon')." WHERE user_id = '" .$user_id. "'";
+    $res = $GLOBALS['db']->selectLimit($sql, $num, $start);
+    while ($row = $GLOBALS['db']->fetchRow($res))
+    {
+        $arr[] = $row;
+    }
+    return $arr;
+
+}
+
+function get_user_voucher_list($user_id, $num = 10, $start = 0)
+{
+    $time=7*24*3600;
+    $now=time();
+    $sql = "SELECT * FROM " .$GLOBALS['ecs']->table('user_voucher')." WHERE user_id = '" .$user_id. "'";
+    $res = $GLOBALS['db']->selectLimit($sql, $num, $start);
+    while ($row = $GLOBALS['db']->fetchRow($res))
+    {
+        if($row['voucher_type']==0 && ($row['add_time']-$time)>$now){
+            $row['opt']=1;
+        }else{
+            $row['opt']=0;
+        }
+        $arr[] = $row;
+    }
+    return $arr;
+
+}
 ?>

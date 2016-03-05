@@ -6118,6 +6118,87 @@ elseif ($action == 'point')
 
 	$smarty->display('user_clips.dwt');
 
+}//显示优惠券列表界面
+elseif ($action == 'coupon_list'){
+    include_once(ROOT_PATH .'include/lib_transaction.php');
+    $page = isset($_REQUEST['page']) ? intval($_REQUEST['page']) : 1;
+    $record_count = $db->getOne("SELECT COUNT(*) FROM " .$ecs->table('user_coupon'). " WHERE user_id = '$user_id'");
+
+    $pager = get_pager('user.php', array('act' => $action), $record_count, $page);
+    $data = get_user_coupon_list($user_id, $pager['size'], $pager['start']);
+    $smarty->assign('pager', $pager);
+    $smarty->assign('data',$data);
+    $smarty->assign('action','coupon_list');
+    $smarty->display('user_coupon.dwt');
+}//生成优惠券界面
+elseif($action == 'coupon_add') {
+    $level = getUserLevel($user_id);
+    $sq = "SELECT * FROM " . $ecs->table('user_coupon_exa') . " WHERE type=$level";
+    $data = $db->getAll($sq);
+    $smarty->assign('data', $data);
+    $smarty->assign('action', 'coupon_add');
+    $smarty->display('user_coupon.dwt');
+    //生成打折卡页面
+}elseif($action == 'coupon_add_type'){
+    $smarty->assign('data',$data);
+    $smarty->assign('action','coupon_add_type');
+    $smarty->display('user_coupon.dwt');
+}elseif($action == 'coupon_save'){
+    $time=time();
+    $sort = $db->getOne("SELECT id FROM " .$ecs->table('user_coupon'). " WHERE id >=0 order by id desc ");
+    $sort=$sort?$sort:1;
+    $coupon_sn =$user_id.date('Ymd',$time).mt_rand(0,9).mt_rand(0,9).$sort;
+    $coupon_price=isset($_REQUEST['coupon_price'])?$_REQUEST['coupon_price']:0;
+    $coupon_type=isset($_REQUEST['coupon_type'])?$_REQUEST['coupon_type']:0;
+    $discount=isset($_REQUEST['discount'])?$_REQUEST['discount']:0;
+    if($coupon_type){
+        if($discount<0.5 || $discount>=1){
+            show_message($_LANG['coupon_tips'], $_LANG['coupon_create'], 'user.php?act=coupon_add_type');
+        }
+    }elseif($coupon_price<0){
+        show_message($_LANG['coupon_price'], $_LANG['coupon_create'], 'user.php?act=coupon_add');
+    }
+    $add_time=time();
+    $sql="INSERT INTO ".$ecs->table('user_coupon')."(`coupon_sn`,`user_id` ,`coupon_price` ,`coupon_type` ,`discount` ,
+  `add_time` )values('$coupon_sn','$user_id','$coupon_price','$coupon_type','$discount','$time') ";
+    $db->query($sql);
+    if($coupon_type){
+        show_message($_LANG['coupon_create_success1'],  $_LANG['coupon_list'], 'user.php?act=coupon_list');
+    }
+    show_message($_LANG['coupon_create_success'],  $_LANG['coupon_list'], 'user.php?act=coupon_list');
+}//显示兑换券界面
+elseif($action == 'voucher_list'){
+    include_once(ROOT_PATH .'include/lib_transaction.php');
+    $page = isset($_REQUEST['page']) ? intval($_REQUEST['page']) : 1;
+    $record_count = $db->getOne("SELECT COUNT(*) FROM " .$ecs->table('user_voucher'). " WHERE user_id = '$user_id'");
+
+    $pager = get_pager('user.php', array('act' => $action), $record_count, $page);
+    $data = get_user_voucher_list($user_id, $pager['size'], $pager['start']);
+    $smarty->assign('pager', $pager);
+    $smarty->assign('data',$data);
+    $smarty->assign('action','voucher_list');
+    $smarty->display('user_coupon.dwt');
+}//兑换页面
+elseif($action == 'voucher_add'){
+    $id=isset($_REQUEST['id'])?$_REQUEST['id']:0;
+    if(!$id){
+        show_message($_LANG['voucher_error'],  $_LANG['voucher_list'], 'user.php?act=voucher_list');
+    }
+    $sq="SELECT * FROM " .$ecs->table('user_voucher'). " WHERE id=$id and voucher_type=0 AND user_id=".$user_id;
+    $data=$db->getRow($sq);
+    if(!$data){
+        show_message($_LANG['voucher_fail'],  $_LANG['voucher_list'], 'user.php?act=voucher_list');
+    }
+    $level =getUserLevel($user_id);
+    $info_sql="SELECT voucher_price FROM " .$ecs->table('user_voucher_exa')." WHERE type=$level AND coupon_price=".$data['voucher_price'];
+    $money=$db->getOne($info_sql);
+    $sql="UPDATE ".$ecs->table('user_voucher')." SET voucher_type=1 where id=$id AND user_id=".$user_id;
+    $db->query($sql);
+    $sql="UPDATE ".$ecs->table('users')."  SET user_money=user_money+$money WHERE user_id=".$user_id ;
+    $db->query($sql);
+    show_message($_LANG['voucher_success'],  $_LANG['voucher_list'], 'user.php?act=voucher_list');
+
+
 }
 
 //生成随机数 by wang

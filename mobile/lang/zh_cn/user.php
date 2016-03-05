@@ -685,5 +685,15 @@ $_LANG['passwd_questions']['favorite_food']   = '我最喜爱的食物？';
 $_LANG['passwd_questions']['interest']        = '我最大的爱好？';
 $_LANG['passwd_questions']['favorite_novel']  = '我最喜欢的小说？';
 $_LANG['passwd_questions']['favorite_equipe'] = '我最喜欢的运动队？';
-
+//优惠券
+$_LANG['coupon_tips'] = '折扣不能大于1或者小于0';
+$_LANG['coupon_create'] = '优惠券生成';
+$_LANG['coupon_price'] = '折扣不能大于1或者小于0';
+$_LANG['coupon_create_success'] = '优惠券已经生成';
+$_LANG['coupon_list'] = '优惠券已经生成';
+$_LANG['voucher_list'] = '兑换券列表';
+$_LANG['voucher_error']='参数不对';
+$_LANG['voucher_fail']='兑换失败';
+$_LANG['voucher_success']='兑换成功';
+$_LANG['coupon_create_success1'] = '打折卡已经生成';
 ?>

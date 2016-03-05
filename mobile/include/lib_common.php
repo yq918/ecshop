@@ -2914,4 +2914,32 @@ function php_self(){
     return $php_self;
 
 }
+/*
+ * 根据用户 返回用户的级别
+ * return 0，普通1，中级，2高级，3金牌，4普通代理5 高级代理
+ * */
+function getUserLevel($user_id){
+    $first_affiliate_persons = $GLOBALS['db']->getOne("SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('users') . " WHERE affiliate_id=".$user_id);
+    $second_affiliate_persons = $GLOBALS['db']->getOne("SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('users') . " WHERE second_affiliate_id=".$user_id);
+    $third_affiliate_persons = $GLOBALS['db']->getOne("SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('users') . " WHERE third_affiliate_id=".$user_id);
+    $all_affiliate_persons = $first_affiliate_persons + $second_affiliate_persons + $third_affiliate_persons;
+    $res=0;
+    if($all_affiliate_persons>10)
+    {
+        $res=1;
+    }
+    $num=$GLOBALS['db']->getOne("SELECT COUNT(*) FROM " . $GLOBALS['ecs']->table('user_voucher') . " WHERE user_id=".$user_id);
+    if($num>=5 && $num<10){
+        $res=2;
+    }elseif($num>=10 && $num<50){
+        $res=3;
+    }elseif($num>=50 && $num<100){
+        $res=4;
+    }elseif($num>=100){
+        $res=5;
+    }
+    return $res;
+
+}
+
 ?>
