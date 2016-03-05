@@ -600,8 +600,10 @@ var card = document.getElementsByName('card');
                 
                   <dd class="dd1" id="cbutnhide" style="display:none"><input   type="button" name="cbut" value="重新输入" id="cbutn"  onClick="clearCoupon()" /></dd>      
                             
-                <input type="hidden" value="{$shop_price_arr.pays}" id="pricepay"/>                
-                <input type="hidden" value="0" id="counponPrice"/>
+                <input type="hidden" name="pricepay" value="{$shop_price_arr.pays}" id="pricepay"/>                
+                <input type="hidden" name="counponPrice" value="0" id="counponPrice"/>
+                
+                <input type="hidden" name="counponNumber" id="counponNumber"/>
                 
 		 </dl>		 
 		</div> 
@@ -1044,11 +1046,11 @@ jQuery(function($){
 	var pricesave = $("#pricesave").val();
 	var pricepayLength= pricepay.length;
 	
-    if(coun.length ==0 || coun.length>18){
+    if(coun.length ==0){
 		  alert('请输入优惠卷或打折卡编号');
 		  return false;
 		 }
-   if(coun.length <10 || coun.length>18){
+   if(coun.length <10 || coun.length>30){
 		  alert('优惠卷或打折卡编号格式错误');
 		  return false;
 	 }
@@ -1072,13 +1074,14 @@ jQuery(function($){
 			  $("#counponPrice").val(result.counponPrice); //优惠 卷兑换金额 
 			  $("#butn").attr('disabled',"true"); 
 			  $("#counpon_number").attr('disabled',"true"); 
+			  $("#counponNumber").val(coun);
 			  $("#butnhide").hide();
               $("#cbutnhide").show(); 
  			 }	 
    },'json');
-   
- 
+     
   }
+  
   
   
   //清除输入
