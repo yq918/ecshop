@@ -998,7 +998,7 @@ elseif( $_REQUEST['step']== 'checkcounpon')
 		echo  json_encode($data);
 		exit;
 	}	
-	if(strlen($counpon_number) <10 || strlen($counpon_number)>18){		 
+	if(strlen($counpon_number) <10 || strlen($counpon_number)>30){		 
 		 $data = array('code' => '1','msg' => '优惠卷或打折卡编号格式错误');
 		 echo  json_encode($data);
 		 exit;
