@@ -1934,10 +1934,12 @@ elseif ($_REQUEST['step'] == 'done')
         }
 		
 		//写入 ecs_user_coupon表
+		$couponnote = $_POST['couponnote'];
+		$counarr    = array('微信商城','淘宝','线下');		
 		$couponData = array(
 		    'use_id' => $user_id,
 			'coupon_status' => '1',
-			'coupon_note' => '淘宝'			 
+			'coupon_note' => $counarr[$couponnote]			 
 		 );
 		$GLOBALS['db']->autoExecute($GLOBALS['ecs']->table('user_coupon'), $couponData, 'UPDATE'," coupon_sn = $counponNumber ");
 		

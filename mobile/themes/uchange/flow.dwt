@@ -607,6 +607,31 @@ var card = document.getElementsByName('card');
                 
 		 </dl>		 
 		</div> 
+        
+        
+        <dl>
+          <dd class="dd1">优惠券来源:</dd>
+          <dd class="dd2" id="selected1" onClick="showcouponNote()">请选择优惠券来源方式</dd>
+          <i></i>
+        </dl>
+		<div class="dl_box" id="coupon_note" style="display:none">
+ 		  <p>
+         <input name="couponnote" type="radio" class="radio" value="0" style="vertical-align:middle"/><label> 微信商城</label>
+           </p>
+           
+           <p>
+         <input name="couponnote" type="radio" class="radio" value="1" style="vertical-align:middle"/><label> 淘宝</label>
+           </p>
+           
+           <p>
+         <input name="couponnote" type="radio" class="radio" value="2" style="vertical-align:middle"/><label> 线下</label>
+           </p>
+           
+            
+		</div>
+        
+        
+        
       </div>
     </section>
     
@@ -1099,6 +1124,10 @@ jQuery(function($){
 		$("#butnhide").show();
         $("#cbutnhide").hide(); 
   }
+  
+  function showcouponNote(){
+	  $("#coupon_note").show();
+	  }
 
 var process_request = "{$lang.process_request}";
 {foreach from=$lang.passport_js item=item key=key}
