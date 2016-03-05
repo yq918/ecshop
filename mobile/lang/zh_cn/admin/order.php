@@ -53,6 +53,18 @@ $_LANG['label_operable_act'] = '当前可执行操作：';
 $_LANG['label_action_note'] = '操作备注：';
 $_LANG['label_invoice_note'] = '发货备注：';
 $_LANG['label_invoice_no'] = '发货单号：';
+
+///////// xxr
+$_LANG['label_counpon_number'] = '优惠卷编号：';
+$_LANG['label_counpon_content'] = '优惠信息：';
+$_LANG['label_counpon_money'] = '优惠卷金额：';
+$_LANG['label_counpon_user'] = '创建用户：';
+$_LANG['label_counpon_ref'] ='优惠券来源:';
+
+
+///////// xxr
+
+
 $_LANG['label_cancel_note'] = '取消原因：';
 $_LANG['notice_cancel_note'] = '（会记录在商家给客户的留言中）';
 $_LANG['op_confirm'] = '确认';

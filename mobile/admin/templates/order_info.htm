@@ -106,6 +106,15 @@
     <td><div align="right"><strong>{$lang.from_order}</strong></div></td>
     <td>{$order.referer}</td>
   </tr>
+  
+  <tr>
+    <td><div align="right"><strong>{$lang.label_counpon_number}</strong></div></td>
+    <td> {$order.coupon_sn}</td>
+    <td><div align="right"><strong>{$lang.label_counpon_content}</strong></div></td>
+    <td>{$order.coupon_content}</td>
+  </tr>
+  
+  
   <tr>
     <th colspan="4">{$lang.other_info}<a href="order.php?act=edit&order_id={$order.order_id}&step=other" class="special">{$lang.edit}</a></th>
     </tr>
@@ -252,6 +261,8 @@
       - {$lang.label_money_paid}<strong>{$order.formated_money_paid}</strong> - {$lang.label_surplus} <strong>{$order.formated_surplus}</strong>
       - {$lang.label_integral} <strong>{$order.formated_integral_money}</strong>
       - {$lang.label_bonus} <strong>{$order.formated_bonus}</strong>
+      - {$lang.label_counpon_money} <strong>{$order.coupon_price}</strong>
+      
     </div></td>
   <tr>
     <td><div align="right"> = {if $order.order_amount >= 0}{$lang.label_money_dues}<strong>{$order.formated_order_amount}</strong>

@@ -425,9 +425,34 @@ function order_info($order_id, $order_sn = '')
     $order = $GLOBALS['db']->getRow($sql);
 
     /* 格式化金额字段 */
+	
+	$coupon_content = '';
+	if(isset($order['coupon_sn']) && !empty($order['coupon_sn']) )
+	{
+		$coupon_sn = $order['coupon_sn'];
+		$sql = " SELECT u.user_name,c.coupon_price,c.coupon_type,c.coupon_note,c.discount FROM " . $GLOBALS['ecs']->table('user_coupon')." AS c LEFT JOIN ".$GLOBALS['ecs']->table('users')." AS u on c.user_id = u.user_id AND c.coupon_sn=".$coupon_sn;
+		
+		$couponData = $GLOBALS['db']->getRow($sql);	 
+	}
+	
+	if(isset($couponData)){
+		$coupon_price = $couponData['coupon_type']=='0'?price_format($couponData['coupon_price'],false):$couponData['discount']*10 .'折';
+		
+		$coupon_content = $GLOBALS['_LANG']['label_counpon_money'].$coupon_price.','.$GLOBALS['_LANG']['label_counpon_user'].$couponData['user_name'].$GLOBALS['_LANG']['label_counpon_ref'].$couponData['coupon_note'];
+		}
+	
+	
     if ($order)
     {
+		
+		
         $order['formated_goods_amount']   = price_format($order['goods_amount'], false);
+		
+		$order['coupon_sn']   =   $order['coupon_sn'] ;
+		$order['coupon_content'] = $coupon_content;
+		$order['coupon_price']   = $coupon_price;
+		
+		
         $order['formated_discount']       = price_format($order['discount'], false);
         $order['formated_tax']            = price_format($order['tax'], false);
         $order['formated_shipping_fee']   = price_format($order['shipping_fee'], false);
