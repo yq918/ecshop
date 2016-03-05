@@ -1597,7 +1597,7 @@ elseif ($_REQUEST['step'] == 'check_integral')
 elseif ($_REQUEST['step'] == 'done')
 {
     include_once('include/lib_clips.php');
-    include_once('include/lib_payment.php');
+    include_once('include/lib_payment.php'); 
 
     /* 取得购物类型 */
     $flow_type = isset($_SESSION['flow_type']) ? intval($_SESSION['flow_type']) : CART_GENERAL_GOODS;
@@ -1646,6 +1646,19 @@ elseif ($_REQUEST['step'] == 'done')
         ecs_header("Location: flow.php?step=consignee\n");
         exit;
     }
+	
+	
+	
+	//优惠卷兑换金额
+	$counponNumber = isset($_POST['counponNumber'])?$_POST['counponNumber']:'';
+	if(!empty($counponNumber) && strlen($counponNumber) < 10 || strlen($counponNumber) > 30 )
+	{
+		 show_message($_LANG['no_counpon_number_length'], '', '', 'warning');
+		 exit;
+	}	
+	//end 
+	
+	
 
     $_POST['how_oos'] = isset($_POST['how_oos']) ? intval($_POST['how_oos']) : 0;
     $_POST['card_message'] = isset($_POST['card_message']) ? compile_str($_POST['card_message']) : '';
@@ -1885,7 +1898,27 @@ elseif ($_REQUEST['step'] == 'done')
         $order['extension_id'] = $_SESSION['extension_id'];
     }
 
-
+	$msg = NULL;
+	$counponPrice = 0;
+    if($order['order_amount'] > 0 && !empty($counponNumber)){
+        $counponData = get_counponData($counponNumber,$order['order_amount'],true);
+		$counponPrice = isset($counponData['price'])?$counponData['price']:0;
+	}	
+	if(isset($counponData) && empty($counponData) ){
+		  $msg = $_LANG['no_counpon_number_nodata'];		   
+		} 
+	if(isset($counponData) && $counponData['coupon_status'] != '0' ){
+		  $msg = $_LANG['no_counpon_number_nostatus'];		   
+		} 
+	if(!empty($msg) && isset($counponData)){
+		 show_message($msg, '', '', 'warning');
+		 exit;
+		} 											 
+	$order['order_amount'] = $order['order_amount'] -  $counponPrice;	
+	if($order['order_amount'] < 0){
+		  $order['order_amount'] = 0;
+		} 
+	
     /* 插入订单表 */
     $error_no = 0;
     do
@@ -1899,6 +1932,49 @@ elseif ($_REQUEST['step'] == 'done')
         {
             die($GLOBALS['db']->errorMsg());
         }
+		
+		//写入 ecs_user_coupon表
+		$couponnote = $_POST['couponnote'];
+		$counarr    = array('微信商城','淘宝','线下');		
+		$couponData = array(
+		    'use_id' => $user_id,
+			'coupon_status' => '1',
+			'coupon_note' => $counarr[$couponnote]			 
+		 );
+		$GLOBALS['db']->autoExecute($GLOBALS['ecs']->table('user_coupon'), $couponData, 'UPDATE'," coupon_sn = $counponNumber ");
+		
+	    $error_no = $GLOBALS['db']->errno();
+        if ($error_no > 0 && $error_no != 1062)
+        {
+            die($GLOBALS['db']->errorMsg());
+        }
+		
+		//优惠卷 写入 ecs_user_voucher表
+		if(isset($counponData) && $counponData['coupon_type'] == '0'){
+			//获取会员级别
+			 $level = getUserLevel($user_id);			 
+			 $userVoucherExa =  getUserVoucherExa($level,$counponPrice);
+             $voucher_price  =  isset($userVoucherExa['voucher_price'])?$userVoucherExa['voucher_price']:0;
+			 
+		   $voucher = array(
+			  'voucher_sn' => mt_rand(50,1000).$user_id.date('Ymd').mt_rand(0,100).mt_rand(10,100),
+			  'coupon_sn'  => $counponNumber,
+			  'user_id'    => $counponData['user_id'],
+			  'use_id'     => $user_id,
+			  'voucher_type' => '0',
+			  'voucher_price' => $voucher_price,
+			  'add_time'     => time()
+			  );  
+		 $GLOBALS['db']->autoExecute($GLOBALS['ecs']->table('user_voucher'), $voucher, 'INSERT');
+
+         $error_no = $GLOBALS['db']->errno();
+        if ($error_no > 0 && $error_no != 1062)
+        {
+            die($GLOBALS['db']->errorMsg());
+        } 
+		
+		  }
+		
     }
     while ($error_no == 1062); //如果是订单号重复则重新提交数据
 

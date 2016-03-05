@@ -35,7 +35,7 @@ var $wxid = "{$wxid}";
   {insert_scripts files='showdiv.js'} 
 <script type="text/javascript">
 
-	$(function(){
+	$(function(){		
 		//+-
  		$('.shopcart').find('.psprocount a').click(function(){
 			var $id = $(this).attr('data-id');
@@ -596,10 +596,42 @@ var card = document.getElementsByName('card');
 		 <dl style="width:75%">
 				<dd class="c333">优惠卷或打折卡编号:</dd>
 				<dd ><input placeholder="请输入优惠卷或打折卡编号" name="counpon_number" id="counpon_number" type="text"   size="20"  /> </dd>
-                <dd class="dd1"><input   type="button" name="but" value="优惠兑换"  onClick="checkCoupon()" /></dd>
-                <input type="hidden" value="{$shop_price_arr.pays}" id="pricepay"/>
+                <dd class="dd1" id="butnhide"><input   type="button" name="but" value="优惠兑换" id="butn"  onClick="checkCoupon()" /></dd>
+                
+                  <dd class="dd1" id="cbutnhide" style="display:none"><input   type="button" name="cbut" value="重新输入" id="cbutn"  onClick="clearCoupon()" /></dd>      
+                            
+                <input type="hidden" name="pricepay" value="{$shop_price_arr.pays}" id="pricepay"/>                
+                <input type="hidden" name="counponPrice" value="0" id="counponPrice"/>
+                
+                <input type="hidden" name="counponNumber" id="counponNumber"/>
+                
 		 </dl>		 
 		</div> 
+        
+        
+        <dl>
+          <dd class="dd1">优惠券来源:</dd>
+          <dd class="dd2" id="selected1" onClick="showcouponNote()">请选择优惠券来源方式</dd>
+          <i></i>
+        </dl>
+		<div class="dl_box" id="coupon_note" style="display:none">
+ 		  <p>
+         <input name="couponnote" type="radio" class="radio" value="0" style="vertical-align:middle"/><label> 微信商城</label>
+           </p>
+           
+           <p>
+         <input name="couponnote" type="radio" class="radio" value="1" style="vertical-align:middle"/><label> 淘宝</label>
+           </p>
+           
+           <p>
+         <input name="couponnote" type="radio" class="radio" value="2" style="vertical-align:middle"/><label> 线下</label>
+           </p>
+           
+            
+		</div>
+        
+        
+        
       </div>
     </section>
     
@@ -622,7 +654,7 @@ var card = document.getElementsByName('card');
 		 </dl>
 		 <dl>
               <dd class="c333">实际支付</dd>
-				<dd >{$shop_price_arr.pay}</dd>
+				<dd  id="payprice">{$shop_price_arr.pay}</dd>
 		 </dl>
 		</div>	
       </div>
@@ -864,7 +896,8 @@ var card = document.getElementsByName('card');
           return true;
         }
 
-        {/literal}
+        {/literal}		
+		
   </script> 
   <!-- Tab切换（高度自适应示范） -->
   <div id="leftTabBox" class="loginBox">
@@ -1013,7 +1046,8 @@ var card = document.getElementsByName('card');
 </section>
 
 <script type="text/javascript">
-jQuery(function($){
+jQuery(function($){ 
+		
 	$('.hd ul li').click(function(){
 		var index = $('.hd ul li').index(this);
 		$(this).addClass('on').siblings('li').removeClass('on');
@@ -1028,33 +1062,72 @@ jQuery(function($){
 <!-- #BeginLibraryItem "/library/public_link.lbi" --><!-- #EndLibraryItem --> 
 </body>
 <script type="text/javascript">
+
+ // 兑换优惠卷
   function checkCoupon()
   {
 	var coun=  $("#counpon_number").val(); 
 	var pricepay = $("#pricepay").val();
 	var pricesave = $("#pricesave").val();
+	var pricepayLength= pricepay.length;
 	
-    if(coun.length ==0 || coun.length>18){
+    if(coun.length ==0){
 		  alert('请输入优惠卷或打折卡编号');
 		  return false;
 		 }
-   if(coun.length <10 || coun.length>18){
+   if(coun.length <10 || coun.length>30){
 		  alert('优惠卷或打折卡编号格式错误');
 		  return false;
 	 }
-  $.post("./flow.php?step=checkcounpon",{counpon_number:coun,pays:pricepay},function(result){
-     // $("span").html(result);
+  $.post("./flow.php?step=checkcounpon",{counpon_number:coun,pays:pricepay},function(result){    
 	 var code = result.code;
 	 if(code == '1'){
 		  alert(result.msg);
 		 }else{
-			 alert("兑换成功，优惠金额为:"+result.counponPrice);
-			  $("#shop_price_save").text('');
-			  $("#shop_price_save").text(pricesave+result.counponPrice+'元')
-			 alert(pricesave);
-			 }	 
-   },'json');  
+			  alert("兑换成功，优惠金额为:￥"+result.counponPrice+'元');
+			  $("#shop_price_save").text(''); 	
+			  pricesave = parseFloat(pricesave);
+			  var counponPrice = 	parseFloat(result.counponPrice);	
+			  counponPrice = counponPrice+pricesave;
+			  var pricelen = pricepayLength - counponPrice.length;
+			  if(counponPrice >= 1){
+				  counponPrice +=".0";
+				  }			 
+			  var payprices = pricepay-counponPrice;
+			  $("#shop_price_save").text('￥ '+counponPrice+'元'); //总优惠金额
+			  $("#payprice").text('￥'+payprices+'元');      //实际支付金额
+			  $("#counponPrice").val(result.counponPrice); //优惠 卷兑换金额 
+			  $("#butn").attr('disabled',"true"); 
+			  $("#counpon_number").attr('disabled',"true"); 
+			  $("#counponNumber").val(coun);
+			  $("#butnhide").hide();
+              $("#cbutnhide").show(); 
+ 			 }	 
+   },'json');
+     
   }
+  
+  
+  
+  //清除输入
+  function clearCoupon()
+  {
+	    var pricesave = $("#pricesave").val();
+		var pricepay = $("#pricepay").val();		
+		$("#shop_price_save").text('￥ '+pricesave+'元'); //还原优惠金额
+	    $("#payprice").text('￥'+pricepay+'元');         //实际支付金额
+	    $("#butn").removeAttr("disabled");  
+	    $("#counpon_number").removeAttr("disabled");  
+		//$("#counpon_number").val('请输入优惠卷或打折卡编号');
+		$("#counpon_number").val('');
+		$("#counpon_number").attr('placeholder','请输入优惠卷或打折卡编号');
+		$("#butnhide").show();
+        $("#cbutnhide").hide(); 
+  }
+  
+  function showcouponNote(){
+	  $("#coupon_note").show();
+	  }
 
 var process_request = "{$lang.process_request}";
 {foreach from=$lang.passport_js item=item key=key}
@@ -1065,4 +1138,8 @@ var compare_no_goods = "{$lang.compare_no_goods}";
 var btn_buy = "{$lang.btn_buy}";
 var is_cancel = "{$lang.is_cancel}";
 var select_spe = "{$lang.select_spe}";
+var coun=  $("#counpon_number").val();  
+if(coun!= '请输入优惠卷或打折卡编号' && coun.length >=10 && coun.length<18){
+	   checkCoupon();
+	 } 
 </script>

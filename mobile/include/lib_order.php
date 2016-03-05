@@ -1717,7 +1717,7 @@ function get_consignee($user_id)
 
 
 
-function get_counponData($counpon_number,$pays=0)
+function get_counponData($counpon_number,$pays=0,$is_array = false)
 {  
         $arr = array();		 
         $sql = "SELECT user_id,coupon_price,coupon_type,discount,coupon_status".
@@ -1725,23 +1725,37 @@ function get_counponData($counpon_number,$pays=0)
                       WHERE coupon_sn='$counpon_number'";
         $arr = $GLOBALS['db']->getRow($sql);  
 		
+		
+		if(!empty( $arr ) && $arr['coupon_type'] == '0'){
+			$price = number_format($arr['coupon_price'], 2, '.', '');			 		
+			}
+		if(!empty( $arr) && $arr['coupon_type'] == '1'){
+			$price = number_format($pays*$arr['discount'], 2, '.', '');			 			
+			}			
+		if($is_array == true){
+			 $arr['price'] = $price;
+			 return $arr;
+			}
+		
 		if(empty($arr)){
 			   return 0;
 		}		
 		if($arr['coupon_status'] != '0')
 		{
 			return -1;
-		}		
- 		if($arr['coupon_type'] == '0'){
-			$price = number_format($arr['coupon_price'], 2, '.', '');			 		
-			}
-		if($arr['coupon_type'] == '1'){
-			$price = number_format($pays*$arr['discount'], 2, '.', '');			 			
-			}
-		 return '￥'.$price; 
+		}	 
+		 return $price; 
  }
 
 
+//根据会员级别与优惠卷金额返回相应的可兑换金额
+function getUserVoucherExa($type,$coupon_price){	
+	 $sql = "SELECT voucher_price ".
+                    " FROM " . $GLOBALS['ecs']->table('voucher_exa') ."  
+                      WHERE type=$type AND coupon_price=$coupon_price";
+      $arr = $GLOBALS['db']->getRow($sql); 
+	  return  $arr; 
+	}
 
 
 

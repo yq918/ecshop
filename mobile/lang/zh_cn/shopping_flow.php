@@ -42,6 +42,16 @@ $_LANG['integral_not_enough'] = '您使用的积分不能超过您现有的积�
 $_LANG['integral_too_much'] = "您使用的积分不能超过%d";
 $_LANG['invalid_bonus'] = "您选择的红包并不存在。";
 $_LANG['no_goods_in_cart'] = '您的购物车中没有商品！';
+
+//////// counpon xxr
+$_LANG['no_counpon_number_length'] = '优惠卷或打折卡编号格式错误！';
+
+$_LANG['no_counpon_number_nostatus'] = '优惠卷或打折卡编号已使用！';
+$_LANG['no_counpon_number_nodata'] = '优惠卷或打折卡编号不存在！';
+
+/////////counpon xxr
+
+
 $_LANG['not_submit_order'] = '您参与本次团购商品的订单已提交，请勿重复操作！';
 $_LANG['pay_success'] = '本次支付已经成功，我们将尽快为您发货。';
 $_LANG['pay_fail'] = '本次支付失败，请及时和我们取得联系。';
