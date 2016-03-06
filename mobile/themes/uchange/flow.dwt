@@ -616,7 +616,7 @@ var card = document.getElementsByName('card');
         </dl>
 		<div class="dl_box" id="coupon_note" style="display:none">
  		  <p>
-         <input name="couponnote" type="radio" class="radio" value="0" style="vertical-align:middle"/><label> 微信商城</label>
+         <input name="couponnote" type="radio" class="radio" checked value="0" style="vertical-align:middle"/><label> 微信商城</label>
            </p>
            
            <p>
@@ -1138,7 +1138,7 @@ var compare_no_goods = "{$lang.compare_no_goods}";
 var btn_buy = "{$lang.btn_buy}";
 var is_cancel = "{$lang.is_cancel}";
 var select_spe = "{$lang.select_spe}";
-var coun=  $("#counpon_number").val();  
+var coun=  $("#counpon_number").val();   
 if(coun!= '请输入优惠卷或打折卡编号' && coun.length >=10 && coun.length<=30){
 	   checkCoupon();
 	 } 

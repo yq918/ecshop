@@ -1655,7 +1655,7 @@ elseif ($_REQUEST['step'] == 'done')
 	{
 		 show_message($_LANG['no_counpon_number_length'], '', '', 'warning');
 		 exit;
-	}	
+	}	 
 	//end 
 	
 	
@@ -1944,13 +1944,16 @@ elseif ($_REQUEST['step'] == 'done')
 			'coupon_status' => '1',
 			'coupon_note' => $counarr[$couponnote]			 
 		 );
-		$GLOBALS['db']->autoExecute($GLOBALS['ecs']->table('user_coupon'), $couponData, 'UPDATE'," coupon_sn = $counponNumber ");
+		 if(isset($counponData) && $counponData['coupon_status'] == '0')
+		 {
+		   $GLOBALS['db']->autoExecute($GLOBALS['ecs']->table('user_coupon'), $couponData, 'UPDATE'," coupon_sn = $counponNumber ");
 		
-	    $error_no = $GLOBALS['db']->errno();
-        if ($error_no > 0 && $error_no != 1062)
-        {
+	      $error_no = $GLOBALS['db']->errno();
+          if ($error_no > 0 && $error_no != 1062)
+          {
             die($GLOBALS['db']->errorMsg());
-        }
+          }
+	   }
 		
 		//优惠卷 写入 ecs_user_voucher表
 		if(isset($counponData) && $counponData['coupon_type'] == '0'){
