@@ -103,12 +103,12 @@
     </header>
     <table width="100%" border="0" cellpadding="5" cellspacing="0">
     <tr>
-              <th align="center">序号</th>
-              <th align="center">兑换券编号</th>
-              <th align="center">优惠券编号</th>
-              <th align="center">兑换券金额</th>
-              <th align="center">兑换券状态</th>
-              <th align="center">操作</th>
+              <th width="10%">序号</th>
+              <th width="30%">兑换券编号</th>
+              <th width="20%"">优惠券编号</th>
+              <th width="10%">兑换券金额</th>
+              <th width="10%">兑换券状态</th>
+              <th width="10%">操作</th>
             </tr>
     </table>
     <section class="wrap voucher_list">
