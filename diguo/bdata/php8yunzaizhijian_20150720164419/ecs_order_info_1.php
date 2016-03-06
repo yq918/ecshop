@@ -73,6 +73,7 @@ E_C("CREATE TABLE `ecs_order_info` (
   `parent_id` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `distribute_status` int(1) NOT NULL DEFAULT '0',
   `discount` decimal(10,2) NOT NULL,
+  `coupon_sn` varchar(120) NOT NULL DEFAULT '' COMMENT '优惠券编号',
   PRIMARY KEY (`order_id`),
   UNIQUE KEY `order_sn` (`order_sn`),
   KEY `user_id` (`user_id`),
