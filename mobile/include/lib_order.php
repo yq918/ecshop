@@ -430,18 +430,21 @@ function order_info($order_id, $order_sn = '')
 	if(isset($order['coupon_sn']) && !empty($order['coupon_sn']) )
 	{
 		$coupon_sn = $order['coupon_sn'];
-		$sql = " SELECT u.user_name,c.coupon_price,c.coupon_type,c.coupon_note,c.discount FROM " . $GLOBALS['ecs']->table('user_coupon')." AS c LEFT JOIN ".$GLOBALS['ecs']->table('users')." AS u on c.user_id = u.user_id AND c.coupon_sn=".$coupon_sn;
+		$sql = " SELECT u.user_name,c.coupon_price,c.coupon_type,c.coupon_note,c.discount FROM " . $GLOBALS['ecs']->table('user_coupon')." AS c LEFT JOIN ".$GLOBALS['ecs']->table('users')." AS u on c.user_id = u.user_id where c.coupon_sn='".$coupon_sn."'";
 		
 		$couponData = $GLOBALS['db']->getRow($sql);	 
-	}
+		
+ 	}
+	
+	
+	
 	
 	if(isset($couponData)){
-		$coupon_price = $couponData['coupon_type']=='0'?price_format($couponData['coupon_price'],false):$couponData['discount']*10 .'折';
+		$coupon_price = $couponData['coupon_type']=='0'?price_format($couponData['coupon_price'],false):price_format((1-$couponData['discount'])*$order['total_fee'],false).' ( '.$couponData['discount']*10 .' 折 )';
 		
 		$coupon_content = $GLOBALS['_LANG']['label_counpon_money'].$coupon_price.','.$GLOBALS['_LANG']['label_counpon_user'].$couponData['user_name'].$GLOBALS['_LANG']['label_counpon_ref'].$couponData['coupon_note'];
-		}
-	
-	
+		} 
+		
     if ($order)
     {
 		
