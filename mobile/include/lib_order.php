@@ -1755,7 +1755,8 @@ function get_counponData($counpon_number,$pays=0,$is_array = false)
 			$price = number_format($arr['coupon_price'], 2, '.', '');			 		
 			}
 		if(!empty( $arr) && $arr['coupon_type'] == '1'){
-			$price = number_format($pays*$arr['discount'], 2, '.', '');			 			
+			$discounts = 1 - $arr['discount'];
+			$price = number_format($pays*$discounts, 2, '.', '');			 			
 			}			
 		if($is_array == true){
 			 $arr['price'] = $price;
