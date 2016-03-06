@@ -6221,6 +6221,7 @@ elseif($action == 'voucher_list'){
     include_once(ROOT_PATH .'include/lib_transaction.php');
 
     $data = get_user_voucher_list($user_id, $limit,$start);
+    $need_time=7*24*3600;
     if($data){
         foreach($data as $k=>$v){
             if($v['voucher_type']>0){
@@ -6229,9 +6230,15 @@ elseif($action == 'voucher_list'){
                 $v['voucher_type']='未兑换';
             }
             if($v['opt']==1){
-                $v['opt']='<a href="user.php?act=voucher_add&id={$item.id}" style="color:blue">兑换</a>';
+                $v['opt']='<a href="user.php?act=voucher_add&id='.$v['id'].'" style="color:blue">兑换</a>';
             }else{
-                $v['opt']='';
+                if($v['voucher_type']==0){
+                    $need_time=$need_time+$v['add_time'];
+                    $v['opt']=date('Y-m-d',$need_time).'后可兑换';
+                }else{
+                    $v['opt']='已兑换';
+                }
+
             }
             $asyList[] = array(
                 'order_content' => '<table width="100%" border="0" cellpadding="5" cellspacing="0" class="ectouch_table_no_border">
@@ -6264,6 +6271,7 @@ elseif($action == 'voucher_add'){
     $level =getUserLevel($user_id);
     $info_sql="SELECT voucher_price FROM " .$ecs->table('user_voucher_exa')." WHERE type=$level AND coupon_price=".$data['voucher_price'];
     $money=$db->getOne($info_sql);
+    $money=empty($money)?0:$money;
     $sql="UPDATE ".$ecs->table('user_voucher')." SET voucher_type=1 where id=$id AND user_id=".$user_id;
     $db->query($sql);
     $sql="UPDATE ".$ecs->table('users')."  SET user_money=user_money+$money WHERE user_id=".$user_id ;
